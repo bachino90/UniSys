@@ -21,6 +21,10 @@
 		EB308F2C188092B500EC117D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB308F0E188092B500EC117D /* UIKit.framework */; };
 		EB308F34188092B500EC117D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EB308F32188092B500EC117D /* InfoPlist.strings */; };
 		EB308F36188092B500EC117D /* UniSysTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB308F35188092B500EC117D /* UniSysTests.m */; };
+		EB32AB421880AC1A00C15DC7 /* RealGas.m in Sources */ = {isa = PBXBuildFile; fileRef = EB32AB411880AC1A00C15DC7 /* RealGas.m */; };
+		EB32AB461880ADE700C15DC7 /* Pressure.m in Sources */ = {isa = PBXBuildFile; fileRef = EB32AB451880ADE700C15DC7 /* Pressure.m */; };
+		EB32AB491880ADFB00C15DC7 /* Temperature.m in Sources */ = {isa = PBXBuildFile; fileRef = EB32AB481880ADFB00C15DC7 /* Temperature.m */; };
+		EBEA3BDC1881DA7200395EA1 /* Component.m in Sources */ = {isa = PBXBuildFile; fileRef = EBEA3BDB1881DA7200395EA1 /* Component.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +57,14 @@
 		EB308F31188092B500EC117D /* UniSysTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UniSysTests-Info.plist"; sourceTree = "<group>"; };
 		EB308F33188092B500EC117D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EB308F35188092B500EC117D /* UniSysTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UniSysTests.m; sourceTree = "<group>"; };
+		EB32AB401880AC1A00C15DC7 /* RealGas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RealGas.h; sourceTree = "<group>"; };
+		EB32AB411880AC1A00C15DC7 /* RealGas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RealGas.m; sourceTree = "<group>"; };
+		EB32AB441880ADE700C15DC7 /* Pressure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pressure.h; sourceTree = "<group>"; };
+		EB32AB451880ADE700C15DC7 /* Pressure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pressure.m; sourceTree = "<group>"; };
+		EB32AB471880ADFB00C15DC7 /* Temperature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Temperature.h; sourceTree = "<group>"; };
+		EB32AB481880ADFB00C15DC7 /* Temperature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Temperature.m; sourceTree = "<group>"; };
+		EBEA3BDA1881DA7200395EA1 /* Component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Component.h; sourceTree = "<group>"; };
+		EBEA3BDB1881DA7200395EA1 /* Component.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Component.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +131,7 @@
 				EB308F20188092B500EC117D /* USViewController.m */,
 				EB308F22188092B500EC117D /* Images.xcassets */,
 				EB308F11188092B500EC117D /* Supporting Files */,
+				EB32AB431880AC2400C15DC7 /* Model */,
 			);
 			path = UniSys;
 			sourceTree = "<group>";
@@ -150,6 +163,21 @@
 				EB308F32188092B500EC117D /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EB32AB431880AC2400C15DC7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EB32AB401880AC1A00C15DC7 /* RealGas.h */,
+				EB32AB411880AC1A00C15DC7 /* RealGas.m */,
+				EB32AB441880ADE700C15DC7 /* Pressure.h */,
+				EB32AB451880ADE700C15DC7 /* Pressure.m */,
+				EB32AB471880ADFB00C15DC7 /* Temperature.h */,
+				EB32AB481880ADFB00C15DC7 /* Temperature.m */,
+				EBEA3BDA1881DA7200395EA1 /* Component.h */,
+				EBEA3BDB1881DA7200395EA1 /* Component.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,9 +278,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB32AB491880ADFB00C15DC7 /* Temperature.m in Sources */,
 				EB308F1B188092B500EC117D /* USAppDelegate.m in Sources */,
+				EB32AB461880ADE700C15DC7 /* Pressure.m in Sources */,
 				EB308F21188092B500EC117D /* USViewController.m in Sources */,
+				EBEA3BDC1881DA7200395EA1 /* Component.m in Sources */,
 				EB308F17188092B500EC117D /* main.m in Sources */,
+				EB32AB421880AC1A00C15DC7 /* RealGas.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,6 +495,7 @@
 				EB308F3B188092B600EC117D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EB308F3C188092B600EC117D /* Build configuration list for PBXNativeTarget "UniSysTests" */ = {
 			isa = XCConfigurationList;
@@ -471,6 +504,7 @@
 				EB308F3E188092B600EC117D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
