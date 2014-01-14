@@ -16,9 +16,13 @@
 
 - (instancetype)initWithComponents:(NSArray *)comp;
 
-@property (nonatomic) double pressure; //    Pa
-@property (nonatomic) double temperature; // K
-@property (nonatomic) double volumen; //     m3/mol
-@property (nonatomic) NSArray *composition;
+@property (nonatomic) double pressure;    //   Pa
+@property (nonatomic) double temperature; //   K
+@property (nonatomic) double volumen;     //   m3/mol
+@property (nonatomic, strong) NSArray *composition;
+
+@property (nonatomic, readonly) double z;
+@property (nonatomic, readonly) double enthalpy;
+@property (nonatomic, readonly) double entropy;
 
 @end

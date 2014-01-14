@@ -10,10 +10,10 @@
 
 @interface Component ()
 
-@property (nonatomic, readwrite) double Tc;
-@property (nonatomic, readwrite) double Pc;
-@property (nonatomic, readwrite) double Vc;
-@property (nonatomic, readwrite) double Zc;
+@property (nonatomic, readwrite) double tc;
+@property (nonatomic, readwrite) double pc;
+@property (nonatomic, readwrite) double vc;
+@property (nonatomic, readwrite) double zc;
 @property (nonatomic, readwrite) double w;
 
 @end
@@ -23,10 +23,10 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.Tc = -1;
-        self.Pc = -1;
-        self.Vc = -1;
-        self.Zc = -1;
+        self.tc = -1;
+        self.pc = -1;
+        self.vc = -1;
+        self.zc = -1;
         self.w = -1;
     }
     return self;

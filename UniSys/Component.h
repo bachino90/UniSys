@@ -14,12 +14,15 @@
 - (instancetype)initWithName:(NSString *)name;
 - (instancetype)initWithNomenclature:(NSString *)nom;
 
-@property (readonly) double Tc;
-@property (readonly) double Pc;
-@property (readonly) double Vc;
-@property (readonly) double Zc;
+@property (readonly) double tc;
+@property (readonly) double pc;
+@property (readonly) double vc;
+@property (readonly) double zc;
 @property (readonly) double w;
 
-@property (nonatomic) double comp;
+@property (nonatomic) double paramB;
+@property (nonatomic) double paramA;
+
+@property (nonatomic) double composition;
 
 @end

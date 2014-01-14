@@ -17,7 +17,9 @@
 
 - (void)checkDegreeOfFreedom;
 
-@property (nonatomic) double z;
+@property (nonatomic, readwrite) double enthalpy;
+@property (nonatomic, readwrite) double entropy;
+@property (nonatomic, readwrite) double z;
 
 @property (nonatomic) double constA;
 @property (nonatomic) double constB;
@@ -69,13 +71,47 @@
     }
 }
 
-- (void)calculateAandB {
+- (void)calculateComponentsParamsAandB {
+    Component *comp;
+    double k;
     for (int i=0; i<self.composition.count; i++) {
-        Component *compI =((Component *)self.composition[i]);
-        for (int j=0; j<self.composition.count; j++) {
-            
+        comp = ((Component *)self.composition[i]);
+        if (comp.w <= 0.49) {
+            k = 0.37464 + 1.54226 * comp.w - 0.26992 * comp.w * comp.w;
+        } else {
+            double wcuad = comp.w * comp.w;
+            k = 0.379642 + 1.48503 * comp.w - 0.164423 * wcuad + 0.016666 * wcuad * comp.w;
         }
+        double alfa = 1 + k * (1-sqrt(self.temperature/comp.tc));
+        comp.paramA = 0.45724 * pow((R_CONST * comp.tc), 2) * alfa / comp.pc;
+        comp.paramB = 0.07780 * (R_CONST * comp.tc) / comp.pc;
     }
+}
+
+- (void)calculateConstantAandB {
+    if (self.composition.count > 1) {
+        Component *compI;
+        Component *compJ;
+        for (int i=0; i<self.composition.count; i++) {
+            compI =((Component *)self.composition[i]);
+            
+            self.paramB += compI.composition * compI.paramB;
+            
+            for (int j=0; j<self.composition.count; j++) {
+                compJ =((Component *)self.composition[j]);
+                
+                double aij = sqrt(compI.paramA * compJ.paramA);
+                
+                self.paramA += compI.composition * compJ.composition * aij;
+                
+            }
+        }
+    } else {
+        Component *comp = ((Component *)self.composition.firstObject);
+        self.paramA = comp.paramA;
+        self.paramB = comp.paramB;
+    }
+    
     
     self.constA = self.paramA * self.pressure / (R_CONST * R_CONST * self.temperature * self.temperature);
     self.constB = self.paramB * self.pressure / (R_CONST * self.temperature);
@@ -87,7 +123,7 @@
 }
 
 - (void)calculateWithPandT {
-    [self calculateAandB];
+    [self calculateConstantAandB];
     
     double Bcuad = self.constB;
     double alfa = - 1 + self.constB;
@@ -112,14 +148,27 @@
             b = c;
         } else if (fb * fc < 0) {
             a = c;
+        } else if (fc == 0) {
+            break;
         }
     }
     
     self.z = c;
+    
+    [self calculateIntensiveProperties];
 }
 
 - (void)calculateWithVandT {
-    [self calculateAandB];
+    [self calculateConstantAandB];
+    
+}
+
+- (void)calculateIntensiveProperties {
+    double z = self.z;
+    double B = self.constB;
+    double A = self.constA;
+    
+    double lnPhi = - log(z - B) + (z - 1) - (A / (2*sqrt(2)*B)) * log((z+(sqrt(2)+1)*B)/(z-(sqrt(2)+1)*B));
     
 }
 

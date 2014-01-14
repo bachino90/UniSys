@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB2017251883531000641B23 /* RealFluid.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2017241883531000641B23 /* RealFluid.m */; };
+		EB20172C188476A000641B23 /* MolarFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = EB20172B188476A000641B23 /* MolarFlow.m */; };
+		EB20172F188476B500641B23 /* MassFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = EB20172E188476B500641B23 /* MassFlow.m */; };
+		EB201732188476CA00641B23 /* Volumen.m in Sources */ = {isa = PBXBuildFile; fileRef = EB201731188476CA00641B23 /* Volumen.m */; };
+		EB2017351884779A00641B23 /* BaseEquipment.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2017341884779A00641B23 /* BaseEquipment.m */; };
+		EB201738188477C900641B23 /* PumpEquipment.m in Sources */ = {isa = PBXBuildFile; fileRef = EB201737188477C900641B23 /* PumpEquipment.m */; };
+		EB20173B188477E300641B23 /* ValveEquipment.m in Sources */ = {isa = PBXBuildFile; fileRef = EB20173A188477E300641B23 /* ValveEquipment.m */; };
+		EB20173E1884780D00641B23 /* HeatExchangerEquipment.m in Sources */ = {isa = PBXBuildFile; fileRef = EB20173D1884780D00641B23 /* HeatExchangerEquipment.m */; };
+		EB201741188478CB00641B23 /* FlashEquipment.m in Sources */ = {isa = PBXBuildFile; fileRef = EB201740188478CB00641B23 /* FlashEquipment.m */; };
+		EB201744188478FE00641B23 /* PipeEquipment.m in Sources */ = {isa = PBXBuildFile; fileRef = EB201743188478FE00641B23 /* PipeEquipment.m */; };
+		EB2017471884799E00641B23 /* CompressorEquipment.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2017461884799E00641B23 /* CompressorEquipment.m */; };
+		EB20174A188479BA00641B23 /* TurbineEquipment.m in Sources */ = {isa = PBXBuildFile; fileRef = EB201749188479BA00641B23 /* TurbineEquipment.m */; };
 		EB308F0B188092B500EC117D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB308F0A188092B500EC117D /* Foundation.framework */; };
 		EB308F0D188092B500EC117D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB308F0C188092B500EC117D /* CoreGraphics.framework */; };
 		EB308F0F188092B500EC117D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB308F0E188092B500EC117D /* UIKit.framework */; };
@@ -38,6 +50,30 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB2017231883531000641B23 /* RealFluid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RealFluid.h; sourceTree = "<group>"; };
+		EB2017241883531000641B23 /* RealFluid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RealFluid.m; sourceTree = "<group>"; };
+		EB20172A188476A000641B23 /* MolarFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MolarFlow.h; sourceTree = "<group>"; };
+		EB20172B188476A000641B23 /* MolarFlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MolarFlow.m; sourceTree = "<group>"; };
+		EB20172D188476B500641B23 /* MassFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MassFlow.h; sourceTree = "<group>"; };
+		EB20172E188476B500641B23 /* MassFlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MassFlow.m; sourceTree = "<group>"; };
+		EB201730188476CA00641B23 /* Volumen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Volumen.h; sourceTree = "<group>"; };
+		EB201731188476CA00641B23 /* Volumen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Volumen.m; sourceTree = "<group>"; };
+		EB2017331884779A00641B23 /* BaseEquipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseEquipment.h; sourceTree = "<group>"; };
+		EB2017341884779A00641B23 /* BaseEquipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseEquipment.m; sourceTree = "<group>"; };
+		EB201736188477C900641B23 /* PumpEquipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PumpEquipment.h; sourceTree = "<group>"; };
+		EB201737188477C900641B23 /* PumpEquipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PumpEquipment.m; sourceTree = "<group>"; };
+		EB201739188477E300641B23 /* ValveEquipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValveEquipment.h; sourceTree = "<group>"; };
+		EB20173A188477E300641B23 /* ValveEquipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValveEquipment.m; sourceTree = "<group>"; };
+		EB20173C1884780D00641B23 /* HeatExchangerEquipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeatExchangerEquipment.h; sourceTree = "<group>"; };
+		EB20173D1884780D00641B23 /* HeatExchangerEquipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeatExchangerEquipment.m; sourceTree = "<group>"; };
+		EB20173F188478CB00641B23 /* FlashEquipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashEquipment.h; sourceTree = "<group>"; };
+		EB201740188478CB00641B23 /* FlashEquipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlashEquipment.m; sourceTree = "<group>"; };
+		EB201742188478FE00641B23 /* PipeEquipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PipeEquipment.h; sourceTree = "<group>"; };
+		EB201743188478FE00641B23 /* PipeEquipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PipeEquipment.m; sourceTree = "<group>"; };
+		EB2017451884799E00641B23 /* CompressorEquipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompressorEquipment.h; sourceTree = "<group>"; };
+		EB2017461884799E00641B23 /* CompressorEquipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompressorEquipment.m; sourceTree = "<group>"; };
+		EB201748188479BA00641B23 /* TurbineEquipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TurbineEquipment.h; sourceTree = "<group>"; };
+		EB201749188479BA00641B23 /* TurbineEquipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TurbineEquipment.m; sourceTree = "<group>"; };
 		EB308F07188092B500EC117D /* UniSys.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UniSys.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB308F0A188092B500EC117D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EB308F0C188092B500EC117D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -91,6 +127,59 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EB2017261884762800641B23 /* Units */ = {
+			isa = PBXGroup;
+			children = (
+				EB32AB441880ADE700C15DC7 /* Pressure.h */,
+				EB32AB451880ADE700C15DC7 /* Pressure.m */,
+				EB32AB471880ADFB00C15DC7 /* Temperature.h */,
+				EB32AB481880ADFB00C15DC7 /* Temperature.m */,
+				EB20172A188476A000641B23 /* MolarFlow.h */,
+				EB20172B188476A000641B23 /* MolarFlow.m */,
+				EB20172D188476B500641B23 /* MassFlow.h */,
+				EB20172E188476B500641B23 /* MassFlow.m */,
+				EB201730188476CA00641B23 /* Volumen.h */,
+				EB201731188476CA00641B23 /* Volumen.m */,
+			);
+			name = Units;
+			sourceTree = "<group>";
+		};
+		EB2017271884765F00641B23 /* Equipments */ = {
+			isa = PBXGroup;
+			children = (
+				EB2017331884779A00641B23 /* BaseEquipment.h */,
+				EB2017341884779A00641B23 /* BaseEquipment.m */,
+				EB201736188477C900641B23 /* PumpEquipment.h */,
+				EB201737188477C900641B23 /* PumpEquipment.m */,
+				EB201739188477E300641B23 /* ValveEquipment.h */,
+				EB20173A188477E300641B23 /* ValveEquipment.m */,
+				EB20173C1884780D00641B23 /* HeatExchangerEquipment.h */,
+				EB20173D1884780D00641B23 /* HeatExchangerEquipment.m */,
+				EB20173F188478CB00641B23 /* FlashEquipment.h */,
+				EB201740188478CB00641B23 /* FlashEquipment.m */,
+				EB201742188478FE00641B23 /* PipeEquipment.h */,
+				EB201743188478FE00641B23 /* PipeEquipment.m */,
+				EB2017451884799E00641B23 /* CompressorEquipment.h */,
+				EB2017461884799E00641B23 /* CompressorEquipment.m */,
+				EB201748188479BA00641B23 /* TurbineEquipment.h */,
+				EB201749188479BA00641B23 /* TurbineEquipment.m */,
+			);
+			name = Equipments;
+			sourceTree = "<group>";
+		};
+		EB2017291884767D00641B23 /* Fluid */ = {
+			isa = PBXGroup;
+			children = (
+				EB32AB401880AC1A00C15DC7 /* RealGas.h */,
+				EB32AB411880AC1A00C15DC7 /* RealGas.m */,
+				EB2017231883531000641B23 /* RealFluid.h */,
+				EB2017241883531000641B23 /* RealFluid.m */,
+				EBEA3BDA1881DA7200395EA1 /* Component.h */,
+				EBEA3BDB1881DA7200395EA1 /* Component.m */,
+			);
+			name = Fluid;
+			sourceTree = "<group>";
+		};
 		EB308EFE188092B500EC117D = {
 			isa = PBXGroup;
 			children = (
@@ -168,14 +257,9 @@
 		EB32AB431880AC2400C15DC7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				EB32AB401880AC1A00C15DC7 /* RealGas.h */,
-				EB32AB411880AC1A00C15DC7 /* RealGas.m */,
-				EB32AB441880ADE700C15DC7 /* Pressure.h */,
-				EB32AB451880ADE700C15DC7 /* Pressure.m */,
-				EB32AB471880ADFB00C15DC7 /* Temperature.h */,
-				EB32AB481880ADFB00C15DC7 /* Temperature.m */,
-				EBEA3BDA1881DA7200395EA1 /* Component.h */,
-				EBEA3BDB1881DA7200395EA1 /* Component.m */,
+				EB2017291884767D00641B23 /* Fluid */,
+				EB2017271884765F00641B23 /* Equipments */,
+				EB2017261884762800641B23 /* Units */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -278,13 +362,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB201738188477C900641B23 /* PumpEquipment.m in Sources */,
+				EB201741188478CB00641B23 /* FlashEquipment.m in Sources */,
+				EB201732188476CA00641B23 /* Volumen.m in Sources */,
+				EB20173E1884780D00641B23 /* HeatExchangerEquipment.m in Sources */,
+				EB2017351884779A00641B23 /* BaseEquipment.m in Sources */,
 				EB32AB491880ADFB00C15DC7 /* Temperature.m in Sources */,
 				EB308F1B188092B500EC117D /* USAppDelegate.m in Sources */,
+				EB201744188478FE00641B23 /* PipeEquipment.m in Sources */,
 				EB32AB461880ADE700C15DC7 /* Pressure.m in Sources */,
 				EB308F21188092B500EC117D /* USViewController.m in Sources */,
 				EBEA3BDC1881DA7200395EA1 /* Component.m in Sources */,
 				EB308F17188092B500EC117D /* main.m in Sources */,
+				EB20174A188479BA00641B23 /* TurbineEquipment.m in Sources */,
+				EB20172C188476A000641B23 /* MolarFlow.m in Sources */,
+				EB2017471884799E00641B23 /* CompressorEquipment.m in Sources */,
+				EB2017251883531000641B23 /* RealFluid.m in Sources */,
 				EB32AB421880AC1A00C15DC7 /* RealGas.m in Sources */,
+				EB20172F188476B500641B23 /* MassFlow.m in Sources */,
+				EB20173B188477E300641B23 /* ValveEquipment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
