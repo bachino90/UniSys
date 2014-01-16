@@ -13,4 +13,7 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+    #import "NumericHelpers.h"
+
+    #define INVALID_PRESSURE -1.0f
 #endif

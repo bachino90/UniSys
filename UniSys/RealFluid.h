@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RealGas.h"
 
 typedef enum {
     liquidState,
@@ -20,11 +21,14 @@ typedef enum {
 @property (nonatomic) double temperature;
 @property (nonatomic) double volumen;
 @property (nonatomic) double molarFlow;
-@property (nonatomic, strong) NSArray *composition;
+@property (nonatomic) double vaporRatio;
+@property (nonatomic, strong) NSArray *components;
+@property (nonatomic, readonly) double *liquidComposition;
+@property (nonatomic, readonly) double *gasComposition;
 
 @property (nonatomic, readonly) double massFlow;
-@property (nonatomic, strong, readonly) NSArray *liquidComposition;
-@property (nonatomic, strong, readonly) NSArray *gasComposition;
+@property (nonatomic, strong, readonly) RealGas *liquid;
+@property (nonatomic, strong, readonly) RealGas *gas;
 
 @property (nonatomic, readonly) double molarEntropy;
 @property (nonatomic, readonly) double molarEnthalpy;

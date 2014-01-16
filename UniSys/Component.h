@@ -19,10 +19,12 @@
 @property (readonly) double vc;
 @property (readonly) double zc;
 @property (readonly) double w;
+@property (readonly) NSDictionary *cpIdealCoeff;
 
 @property (nonatomic) double paramB;
 @property (nonatomic) double paramA;
 
 @property (nonatomic) double composition;
+@property (nonatomic) double phi;
 
 @end

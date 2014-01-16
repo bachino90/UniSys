@@ -7,9 +7,19 @@
 //
 
 #import "TurbineEquipment.h"
-#import "RealFluid.h"
+
+@interface TurbineEquipment ()
+@end
 
 @implementation TurbineEquipment
+
+- (RealFluid *)inletFluid {
+    return ((RealFluid *)self.inletStreams.firstObject);
+}
+
+- (RealFluid *)outletFluid {
+    return ((RealFluid *)self.outletStreams.firstObject);
+}
 
 - (NSInteger)maxFlowInletStreams {
     return 1;
@@ -43,11 +53,43 @@
     }
 }
 
-- (double)calculateOutletTemperature {
-    double a,b,c;
-    c=0;
+- (double)calculateOutletReversibleTemperature {
+    double inletEntropy = self.inletFluid.molarEntropy;
+    FunctionBlock entropyBalance = ^(double t){
+        self.outletFluid.temperature = t;
+        double outletEntropy = self.outletFluid.molarEntropy;
+        return outletEntropy - inletEntropy;
+    };
     
-    return c;
+    NSDictionary *resultsEntropyBalance = [[NumericHelpers sharedInstance] regulaFalsiMethod:entropyBalance infLimit:0.0 supLimit:self.inletFluid.temperature];
+    
+    double outletReversibleTemperature = [resultsEntropyBalance[@"ZEROS"] doubleValue];
+    
+    return outletReversibleTemperature;
+}
+
+- (double)calculateOutletTemperature {
+
+    double outletReversibleTemperature = [self calculateOutletReversibleTemperature];
+    
+    self.outletFluid.temperature = outletReversibleTemperature;
+    double outletEnthalpyReversible = self.outletFluid.molarEnthalpy;
+    double inletEnthalpy = self.inletFluid.molarEnthalpy;
+    double deltaReversibleEnthalpy = outletEnthalpyReversible - inletEnthalpy;
+    
+    FunctionBlock enthalpyPerformance = ^(double t){
+        self.outletFluid.temperature = t;
+        double outletEnthalpy = self.outletFluid.molarEnthalpy;
+        return (outletEnthalpy - inletEnthalpy) - self.isoEntropyPerformance * deltaReversibleEnthalpy;
+    };
+    
+    NSDictionary *resultsEnthalpyPerformance = [[NumericHelpers sharedInstance] regulaFalsiMethod:enthalpyPerformance infLimit:outletReversibleTemperature supLimit:outletReversibleTemperature + 200];
+    
+    double outletTemperature = [resultsEnthalpyPerformance[@"ZEROS"] doubleValue];
+    
+    self.outletFluid.temperature = outletTemperature;
+    
+    return outletTemperature;
 }
 
 - (void)performMassEnergyBalance {

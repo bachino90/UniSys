@@ -7,7 +7,13 @@
 //
 
 #import "BaseEquipment.h"
+#import "RealFluid.h"
 
 @interface TurbineEquipment : BaseEquipment
+
 @property (nonatomic) double isoEntropyPerformance;
+
+@property (nonatomic, readonly) RealFluid *inletFluid;
+@property (nonatomic, readonly) RealFluid *outletFluid;
+
 @end

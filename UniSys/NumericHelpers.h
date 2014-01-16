@@ -1,0 +1,19 @@
+//
+//  NumericHelpers.h
+//  UniSys
+//
+//  Created by Emiliano Bivachi on 14/01/14.
+//  Copyright (c) 2014 Emiliano Bivachi. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+typedef double (^FunctionBlock) (double);
+
+@interface NumericHelpers : NSObject
+
++ (instancetype)sharedInstance;
+
+- (NSDictionary *)regulaFalsiMethod:(FunctionBlock)function infLimit:(double)a supLimit:(double)b;
+
+@end
