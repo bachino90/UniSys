@@ -17,6 +17,8 @@ typedef enum {
 
 @interface RealFluid : NSObject
 
+- (instancetype)initWithComponents:(NSArray *)comp;
+
 @property (nonatomic) double pressure;
 @property (nonatomic) double temperature;
 @property (nonatomic) double volumen;
@@ -34,5 +36,7 @@ typedef enum {
 @property (nonatomic, readonly) double molarEnthalpy;
 
 @property (nonatomic, readonly) BOOL isDeterminated;
+
+- (void)calcPropertiesPT;
 
 @end

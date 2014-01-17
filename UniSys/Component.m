@@ -15,6 +15,9 @@
 @property (nonatomic, readwrite) double vc;
 @property (nonatomic, readwrite) double zc;
 @property (nonatomic, readwrite) double w;
+@property (nonatomic, strong, readwrite) NSDictionary *cpIdealCoeff;
+
+@property (nonatomic, readwrite) double paramB;
 
 @end
 
@@ -43,6 +46,21 @@
 - (instancetype)initWithName:(NSString *)name {
     self = [super init];
     if (self) {
+        if ([name isEqualToString:@"metano"]) {
+            self.tc = 190.56;
+            self.pc = 4599000;
+            self.vc = 98.6;
+            self.zc = 0.286;
+            self.w = 0.011;
+            
+        } else { //propano
+            self.tc = 369.83;
+            self.pc = 4248000;
+            self.vc = 200.0;
+            self.zc = 0.276;
+            self.w = 0.152;
+        }
+        self.paramB = 0.0778 * R_CONST * self.tc / self.pc;
         
     }
     return self;

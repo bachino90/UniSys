@@ -27,5 +27,6 @@
 @property (nonatomic, readonly) double lnPhi;
 
 - (void)checkDegreeOfFreedom;
+- (double *)derivateLnPhiInPressure;
 
 @end

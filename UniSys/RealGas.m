@@ -9,10 +9,6 @@
 #import "RealGas.h"
 #import "Component.h"
 
-
-#define R_CONST 8.314472
-
-
 @interface RealGas ()
 
 @property (nonatomic, readwrite) double z;
@@ -98,7 +94,6 @@
         }
         double alfa = 1 + k * (1-sqrt(self.temperature/comp.tc));
         comp.paramA = 0.45724 * pow((R_CONST * comp.tc), 2) * alfa / comp.pc;
-        comp.paramB = 0.07780 * (R_CONST * comp.tc) / comp.pc;
     }
 }
 
@@ -211,16 +206,25 @@
     self.enthalpy = R_CONST * self.temperature * (z-1) + (((self.temperature * self.dadt)-self.paramA) / (2*sqrt(2)*self.paramB)) * log((z+(sqrt(2)+1)*B)/(z+(-sqrt(2)+1)*B));
 }
 
-/*
+
 - (double *)derivateLnPhiInPressure {
-    RealGas *aGas = [[RealGas alloc] initWithComponents:self.components isLiquid:self.isLiquid];
-    RealGas *bGas = [[RealGas alloc] initWithComponents:self.components isLiquid:self.isLiquid];
+    double z = self.z;
+    double B = self.constB;
+    double A = self.constA;
+    double p =self.pressure;
+    Component *comp;
     
-    aGas.temperature = self.temperature;
-    bGas.temperature = self.temperature;
-    return 0.0;
+    double *DlnPhiDP;
+    DlnPhiDP = (double *)calloc(self.components.count, sizeof(double));
+    double dzdp = (B * (2*A+2*B*z+z) - A*z)/(p*(3*z*z-2*z+A-B-B*B));
+    
+    for (int i = 0; i<self.components.count; i++) {
+        comp = ((Component *)self.components[i]);
+        DlnPhiDP[i] = (comp.paramB * dzdp / self.paramB) + ((dzdp - (B/p))/(B-z))+((A/(z+B))*(1 - (comp.paramB/self.paramB))*((dzdp/z)-(1/p)));
+    }
+    return DlnPhiDP;
 }
-*/
+
 
 
 @end

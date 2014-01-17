@@ -16,4 +16,5 @@
     #import "NumericHelpers.h"
 
     #define INVALID_PRESSURE -1.0f
+    #define R_CONST 8.314472f
 #endif

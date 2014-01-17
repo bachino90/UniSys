@@ -21,6 +21,14 @@
 
 @implementation RealFluid
 
+- (instancetype)initWithComponents:(NSArray *)comp {
+    self = [super init];
+    if (self) {
+        self.components = comp;
+    }
+    return self;
+}
+
 - (BOOL)isDeterminated {
     return (self.molarFlow > 0 && self.temperature > 0 && (self.pressure > 0 || self.volumen > 0) && (self.components && self.components.count>0));
 }
@@ -174,6 +182,18 @@
     self.liquid = liquidB;
 }
 
+- (double)initializeSaturatePressureForTemperature:(double)temp {
+    //Dong and Lienhard
+    double p=0;
+    for (int i=0; i<self.components.count; i++) {
+        Component *comp = self.components[i];
+        double tr = temp/comp.tc;
+        double lnPrSat = 5.3727*(1-tr)+comp.w*(7.49408 - 11.18177*pow(tr, 3) + 3.68769 * pow(tr, 6) + 17.92998 * log(tr));
+        p+= comp.composition * exp(lnPrSat) * comp.pc;
+    }
+    return p;
+}
+
 - (double)calcDewP {
     double gasComp[self.components.count];
     for (int i=0; i<self.components.count; i++) {
@@ -196,8 +216,8 @@
     
     double F;
     double dFdP;
-    double Pj = self.pressure;
-    double Pj1 = self.pressure;
+    double Pj = [self initializeSaturatePressureForTemperature:self.temperature];
+    double Pj1 = Pj;
     RealGas *gasB;
     RealGas *liquidB;
     liquidB = [[RealGas alloc] initWithComponents:self.components isLiquid:YES];
@@ -206,6 +226,7 @@
     liquidB.pressure = self.pressure;
     liquidB.composition = liquidComp;
     [liquidB checkDegreeOfFreedom];
+    double *liquidDlnphiDP = [liquidB derivateLnPhiInPressure];
     
     do {
         Pj = Pj1;
@@ -224,13 +245,16 @@
         
         F = -1;
         dFdP = 0;
+        double *gasDlnphiDP = [gasB derivateLnPhiInPressure];
         for (int i=0; i<self.components.count; i++) {
             Component *comp = self.components[i];
             _componentKi[i] = exp(liquidB.lnPhi - gasB.lnPhi);
             F += comp.composition * _componentKi[i];
+            dFdP +=comp.composition * _componentKi[i] * (liquidDlnphiDP[i] - gasDlnphiDP[i]);
         }
         
         Pj1 = Pj - F/dFdP;
+        
     } while (ABS(Pj1-Pj)>0.1);
     
     return Pj1;
