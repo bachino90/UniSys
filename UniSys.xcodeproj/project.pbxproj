@@ -21,6 +21,8 @@
 		EB20174A188479BA00641B23 /* TurbineEquipment.m in Sources */ = {isa = PBXBuildFile; fileRef = EB201749188479BA00641B23 /* TurbineEquipment.m */; };
 		EB20174E1885A4D700641B23 /* NumericHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = EB20174D1885A4D700641B23 /* NumericHelpers.m */; };
 		EB2017511885B14000641B23 /* HeaterEquipment.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2017501885B14000641B23 /* HeaterEquipment.m */; };
+		EB201754188B138600641B23 /* IdealGas.m in Sources */ = {isa = PBXBuildFile; fileRef = EB201753188B138600641B23 /* IdealGas.m */; };
+		EB201757188B17E200641B23 /* CubicGas.m in Sources */ = {isa = PBXBuildFile; fileRef = EB201756188B17E200641B23 /* CubicGas.m */; };
 		EB308F0B188092B500EC117D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB308F0A188092B500EC117D /* Foundation.framework */; };
 		EB308F0D188092B500EC117D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB308F0C188092B500EC117D /* CoreGraphics.framework */; };
 		EB308F0F188092B500EC117D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB308F0E188092B500EC117D /* UIKit.framework */; };
@@ -80,6 +82,10 @@
 		EB20174D1885A4D700641B23 /* NumericHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumericHelpers.m; sourceTree = "<group>"; };
 		EB20174F1885B14000641B23 /* HeaterEquipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaterEquipment.h; sourceTree = "<group>"; };
 		EB2017501885B14000641B23 /* HeaterEquipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaterEquipment.m; sourceTree = "<group>"; };
+		EB201752188B138600641B23 /* IdealGas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdealGas.h; sourceTree = "<group>"; };
+		EB201753188B138600641B23 /* IdealGas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdealGas.m; sourceTree = "<group>"; };
+		EB201755188B17E200641B23 /* CubicGas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CubicGas.h; sourceTree = "<group>"; };
+		EB201756188B17E200641B23 /* CubicGas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CubicGas.m; sourceTree = "<group>"; };
 		EB308F07188092B500EC117D /* UniSys.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UniSys.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB308F0A188092B500EC117D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EB308F0C188092B500EC117D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -178,6 +184,10 @@
 		EB2017291884767D00641B23 /* Fluid */ = {
 			isa = PBXGroup;
 			children = (
+				EB201752188B138600641B23 /* IdealGas.h */,
+				EB201753188B138600641B23 /* IdealGas.m */,
+				EB201755188B17E200641B23 /* CubicGas.h */,
+				EB201756188B17E200641B23 /* CubicGas.m */,
 				EB32AB401880AC1A00C15DC7 /* RealGas.h */,
 				EB32AB411880AC1A00C15DC7 /* RealGas.m */,
 				EB2017231883531000641B23 /* RealFluid.h */,
@@ -386,7 +396,9 @@
 				EB20173E1884780D00641B23 /* HeatExchangerEquipment.m in Sources */,
 				EB2017511885B14000641B23 /* HeaterEquipment.m in Sources */,
 				EB2017351884779A00641B23 /* BaseEquipment.m in Sources */,
+				EB201757188B17E200641B23 /* CubicGas.m in Sources */,
 				EB32AB491880ADFB00C15DC7 /* Temperature.m in Sources */,
+				EB201754188B138600641B23 /* IdealGas.m in Sources */,
 				EB308F1B188092B500EC117D /* USAppDelegate.m in Sources */,
 				EB201744188478FE00641B23 /* PipeEquipment.m in Sources */,
 				EB32AB461880ADE700C15DC7 /* Pressure.m in Sources */,

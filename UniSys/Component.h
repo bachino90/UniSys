@@ -21,8 +21,11 @@
 @property (readonly) double w;
 @property (nonatomic, strong, readonly) NSDictionary *cpIdealCoeff;
 
-@property (nonatomic, readonly) double paramB;
-@property (nonatomic) double paramA;
+@property (nonatomic) double cubic_b;
+@property (nonatomic) double cubic_a_const;
+@property (nonatomic) double cubic_k;
+@property (nonatomic) double cubic_a; // a = a_const * (1+k*(1-sqrt(T/Tc))^2
+@property (nonatomic) double cubic_dadt;
 
 @property (nonatomic) double composition;
 @property (nonatomic) double phi;

@@ -22,7 +22,10 @@
 
 @property (nonatomic) double paramA;
 @property (nonatomic) double paramB;
+
 @property (nonatomic) double dadt;
+@property (nonatomic) double dzdt;
+@property (nonatomic) double dzdp;
 
 @property (nonatomic) BOOL isLiquid;
 
@@ -93,7 +96,7 @@
             k = 0.379642 + 1.48503 * comp.w - 0.164423 * wcuad + 0.016666 * wcuad * comp.w;
         }
         double alfa = 1 + k * (1-sqrt(self.temperature/comp.tc));
-        comp.paramA = 0.45724 * pow((R_CONST * comp.tc), 2) * alfa / comp.pc;
+        comp.cubic_a = 0.45724 * pow((R_CONST * comp.tc), 2) * alfa / comp.pc;
     }
 }
 
@@ -104,10 +107,10 @@
     self.paramB = 0;
     for (int i=0; i<self.components.count; i++) {
         compI =((Component *)self.components[i]);
-        self.paramB += compI.composition * compI.paramB;
+        self.paramB += compI.composition * compI.cubic_b;
         for (int j=0; j<self.components.count; j++) {
             compJ =((Component *)self.components[j]);
-            double aij = sqrt(compI.paramA * compJ.paramA);
+            double aij = sqrt(compI.cubic_a * compJ.cubic_a);
             self.paramA += compI.composition * compJ.composition * aij;
         }
     }
@@ -138,32 +141,6 @@
     NSDictionary *results = [[NumericHelpers sharedInstance] regulaFalsiMethod:zFunction infLimit:0.5 supLimit:1.5];
     self.z = [results[@"ZEROS"] doubleValue];
     
-    /*
-    double error = 0.001;
-    double a = 0.5;
-    double b = 1.5;
-    
-    double c;
-    double fa;
-    double fb;
-    double fc;
-    
-    while (ABS(fc) > error) {
-        fa = [self cubicZ:a alfa:alfa beta:beta gamma:gamma];
-        fb = [self cubicZ:b alfa:alfa beta:beta gamma:gamma];
-        c = b - (fb * (b - a)/(fb - fa));
-        fc = [self cubicZ:c alfa:alfa beta:beta gamma:gamma];
-        if (fa * fc < 0) {
-            b = c;
-        } else if (fb * fc < 0) {
-            a = c;
-        } else if (fc == 0) {
-            break;
-        }
-    }
-    self.z = c;
-    */
-    
     [self calculateIntensiveProperties];
 }
 
@@ -191,12 +168,12 @@
         double AB = 0;
         for (int j = 0; j<self.components.count; j++) {
             Component *compJ = ((Component *)self.components[j]);
-            double aij = sqrt(compJ.paramA * comp.paramA);
+            double aij = sqrt(compJ.cubic_a * comp.cubic_a);
             AB += compJ.composition * aij;
         }
         AB *= 2/self.paramA;
-        AB -= (comp.paramB / self.paramB);
-        double lnPhi = - log(z - B) + (z - 1) * (comp.paramB / self.paramB) - (A / (2*sqrt(2)*B)) * AB * log((z+(sqrt(2)+1)*B)/(z-(sqrt(2)-1)*B));
+        AB -= (comp.cubic_b / self.paramB);
+        double lnPhi = - log(z - B) + (z - 1) * (comp.cubic_b / self.paramB) - (A / (2*sqrt(2)*B)) * AB * log((z+(sqrt(2)+1)*B)/(z-(sqrt(2)-1)*B));
         
         _componentLnPhi[i] = lnPhi;
         self.lnPhi += comp.composition * lnPhi;
@@ -220,11 +197,29 @@
     
     for (int i = 0; i<self.components.count; i++) {
         comp = ((Component *)self.components[i]);
-        DlnPhiDP[i] = (comp.paramB * dzdp / self.paramB) + ((dzdp - (B/p))/(B-z))+((A/(z+B))*(1 - (comp.paramB/self.paramB))*((dzdp/z)-(1/p)));
+        DlnPhiDP[i] = (comp.cubic_b * dzdp / self.paramB) + ((dzdp - (B/p))/(B-z))+((A/(z+B))*(1 - (comp.cubic_b/self.paramB))*((dzdp/z)-(1/p)));
     }
     return DlnPhiDP;
 }
 
+- (double *)derivateLnPhiInTemperature {
+    double z = self.z;
+    double B = self.constB;
+    double A = self.constA;
+    double t = self.temperature;
+    Component *comp;
+    
+    double *DlnPhiDP;
+    DlnPhiDP = (double *)calloc(self.components.count, sizeof(double));
+    double dAdt = A * ((self.dadt/self.paramA)-(2/t));
+    double dzdt = (dAdt*(B-z)-B*(A+z+2*B*z)*t)/(3*z*z-2*z+A-B-B*B);
+    
+    for (int i = 0; i<self.components.count; i++) {
+        comp = ((Component *)self.components[i]);
+        //DlnPhiDP[i] = (comp.paramB * dzdp / self.paramB) + ((dzdp - (B/p))/(B-z))+((A/(z+B))*(1 - (comp.paramB/self.paramB))*((dzdp/z)-(1/p)));
+    }
+    return DlnPhiDP;
+}
 
 
 @end

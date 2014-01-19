@@ -17,8 +17,6 @@
 @property (nonatomic, readwrite) double w;
 @property (nonatomic, strong, readwrite) NSDictionary *cpIdealCoeff;
 
-@property (nonatomic, readwrite) double paramB;
-
 @end
 
 @implementation Component
@@ -59,9 +57,7 @@
             self.vc = 200.0;
             self.zc = 0.276;
             self.w = 0.152;
-        }
-        self.paramB = 0.0778 * R_CONST * self.tc / self.pc;
-        
+        }        
     }
     return self;
 }
