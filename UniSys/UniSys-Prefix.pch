@@ -17,4 +17,24 @@
 
     #define INVALID_PRESSURE -1.0f
     #define R_CONST 8.314472f
+
+    #define T0 293.15
+    #define P0 103250.0
+
+typedef enum {
+    Ideal,
+    PR,
+    PRSV,
+    PRTwu,
+    RK,
+    SRK,
+    SRKTwu,
+    SRKKabadiDanner,
+    NRTL,
+    vanLaar,
+    Wilson,
+    Margules,
+    UNIQUAC,
+} FluidModelType;
+
 #endif

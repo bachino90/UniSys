@@ -14,8 +14,8 @@
 @property (nonatomic, readwrite) double *liquidComposition;
 @property (nonatomic, readwrite) double *gasComposition;
 
-@property (nonatomic, strong, readwrite) RealGas *gas;
-@property (nonatomic, strong, readwrite) RealGas *liquid;
+@property (nonatomic, strong, readwrite) CubicGas *gas;
+@property (nonatomic, strong, readwrite) CubicGas *liquid;
 
 @end
 
@@ -30,7 +30,10 @@
 }
 
 - (BOOL)isDeterminated {
-    return (self.molarFlow > 0 && self.temperature > 0 && (self.pressure > 0 || self.volumen > 0) && (self.components && self.components.count>0));
+    return (((self.temperature > 0 && self.pressure > 0) ||
+            (self.vaporRatio > 0 && self.temperature > 0) ||
+            (self.vaporRatio > 0 && self.pressure > 0))
+            && (self.components && self.components.count>0));
 }
 
 - (double)molarEnthalpy {
@@ -41,6 +44,10 @@
     return (self.vaporRatio * self.gas.entropy + (1-self.vaporRatio) * self.liquid.entropy);
 }
 
+- (double)volumen {
+    return (self.vaporRatio * self.gas.volumen + (1-self.vaporRatio) * self.liquid.volumen);
+}
+
 - (double)wilsonKForComponent:(Component *)comp pressure:(double)p andTemperature:(double)t {
     return (comp.pc/p) * exp(5.373 * (1+comp.w) * (1-(comp.tc/t)));
 }
@@ -48,7 +55,7 @@
 - (void)calcPropertiesPT {
     if (!self.isDeterminated)
         return;
-    
+        
     double bubblePressure = [self calcBubbleP];
     double dewPressure = [self calcDewP];
     
@@ -63,7 +70,7 @@
             self.gasComposition[i] = comp.composition;
             self.liquidComposition[i] = 0;
         }
-        self.gas = [[RealGas alloc] initWithComponents:self.components isLiquid:NO];
+        self.gas = [[CubicGas alloc] initWithComponents:self.components isLiquid:NO];
         self.gas.temperature = self.temperature;
         self.gas.pressure = self.pressure;
         [self.gas checkDegreeOfFreedom];
@@ -76,7 +83,7 @@
             self.liquidComposition[i] = comp.composition;
             self.gasComposition[i] = 0;
         }
-        self.liquid = [[RealGas alloc] initWithComponents:self.components isLiquid:YES];
+        self.liquid = [[CubicGas alloc] initWithComponents:self.components isLiquid:YES];
         self.liquid.temperature = self.temperature;
         self.liquid.pressure = self.pressure;
         [self.liquid checkDegreeOfFreedom];
@@ -84,15 +91,23 @@
 }
 
 - (void)calcPropertiesTVaporRatio {
-    
+    if (self.vaporRatio == 0.0) {   // Punto de burbuja
+        self.pressure = [self calcBubbleP];
+    } else if (self.vaporRatio == 1.0) {  // Punto de Rocio
+        self.pressure = [self calcDewP];
+    } else if (self.vaporRatio > 0.0 && self.vaporRatio < 1.0) {  // Equilibrio
+        
+    }
 }
 
 - (void)calcPropertiesPVaporRatio {
-    
-}
-
-- (void)calcPropertiesVT {
-    
+    if (self.vaporRatio == 0.0) {   // Punto de burbuja
+        self.temperature = [self calcBubbleT];
+    } else if (self.vaporRatio == 1.0) {  // Punto de Rocio
+        self.temperature = [self calcDewT];
+    } else if (self.vaporRatio > 0.0 && self.vaporRatio < 1.0) {  // Equilibrio
+        
+    }
 }
 
 - (void)initializeComponentKi {
@@ -109,19 +124,20 @@
     
 }
 
-- (BOOL)compareOldXi:(double [])xi andOldYi:(double [])yi {
-    BOOL cont = NO;
-    double error = 0.0001;
-    for (int i=0; i<self.components.count; i++) {
-        if ((ABS(xi[i] - _liquidComposition[i]) > error) || (ABS(yi[i] - _gasComposition[i]) > error)) {
-            cont = YES;
-            break;
-        }
-    }
-    return cont;
-}
+#pragma mark - Flash PT
 
 - (void)calcFlashPT {
+    if (YES)
+        [self calcFlashPT_phiphi];
+    else
+        [self calcFlashPT_gammphi];
+}
+
+- (void)calcFlashPT_gammphi {
+    #warning Falta Flash PT gamma/phi
+}
+
+- (void)calcFlashPT_phiphi {
     if (!self.isDeterminated)
         return;
     
@@ -132,20 +148,32 @@
         double *ki = self.componentKi;
         [self.components enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             Component *comp = (Component *)obj;
-            f += (ki[idx] * comp.composition)/(1+beta*(ki[idx]-1));
+            f += ((ki[idx]-1) * comp.composition)/(1+beta*(ki[idx]-1));
         }];
+        NSLog(@"beta: %g || f: %g",beta,f);
         return f;
+    };
+    
+    FunctionBlock derivateBetaFunction = ^(double beta) {
+        __block double f = 0;
+        double *ki = self.componentKi;
+        [self.components enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            Component *comp = (Component *)obj;
+            f += (pow(ki[idx]-1,2) * comp.composition)/pow(1+beta*(ki[idx]-1),2);
+        }];
+        NSLog(@"beta: %g || f: %g",beta,f);
+        return -f;
     };
     
     double xi[self.components.count];
     double yi[self.components.count];
-    RealGas *gasB;
-    RealGas *liquidB;
+    CubicGas *gasB;
+    CubicGas *liquidB;
     double beta;
     
     do {
-        NSDictionary *results = [[NumericHelpers sharedInstance] regulaFalsiMethod:betaFunction infLimit:0.0 supLimit:1.0];
-        
+        //NSDictionary *results = [[NumericHelpers sharedInstance] regulaFalsiMethod:betaFunction infLimit:-0.01 supLimit:1.01];
+        NSDictionary *results = [[NumericHelpers sharedInstance] newtonRaphsonMethod:betaFunction derivate:derivateBetaFunction initValue:0.5];
         beta = [results[@"ZEROS"] doubleValue];
         
         for (int i=0; i<self.components.count; i++) {
@@ -155,8 +183,8 @@
             yi[i] = ki[i] * comp.composition / (1+beta * (ki[i]-1));
         }
         
-        gasB = [[RealGas alloc] initWithComponents:self.components isLiquid:NO];
-        liquidB = [[RealGas alloc] initWithComponents:self.components isLiquid:YES];
+        gasB = [[CubicGas alloc] initWithComponents:self.components isLiquid:NO];
+        liquidB = [[CubicGas alloc] initWithComponents:self.components isLiquid:YES];
         
         liquidB.temperature = self.temperature;
         liquidB.pressure = self.pressure;
@@ -169,7 +197,7 @@
         [gasB checkDegreeOfFreedom];
         
         for (int i=0; i<self.components.count; i++) {
-            _componentKi[i] = exp(liquidB.lnPhi - gasB.lnPhi);
+            _componentKi[i] = exp(liquidB.componentLnPhi[i] - gasB.componentLnPhi[i]);
         }
         
     } while ([self compareOldXi:xi andOldYi:yi]);
@@ -181,6 +209,151 @@
     self.gas = gasB;
     self.liquid = liquidB;
 }
+
+#pragma mark - Dew P
+
+- (double)calcDewP {
+    if (YES)
+        return [self calcDewP_phiphi];
+    else
+        return [self calcDewP_gammaphi];
+}
+
+- (double)calcDewP_phiphi {
+    #warning Falta Bubble P phi/phi
+    double gasComp[self.components.count];
+    for (int i=0; i<self.components.count; i++) {
+        Component *comp = self.components[i];
+        gasComp[i] = comp.composition;
+    }
+    
+    [self initializeComponentKi];
+    
+    return 0;
+}
+
+- (double)calcDewP_gammaphi {
+    #warning Falta Dew P gamma/phi
+    
+    return 0;
+}
+
+#pragma mark - Bubble P
+
+- (double)calcBubbleP {
+    if (YES)
+        return [self calcBubbleP_phiphi];
+    else
+        return [self calcBubbleP_gammaphi];
+}
+
+- (double)calcBubbleP_gammaphi {
+#warning Falta Bubble P gamma/phi
+    return 0;
+}
+
+- (double)calcBubbleP_phiphi {
+    double liquidComp[self.components.count];
+    for (int i=0; i<self.components.count; i++) {
+        Component *comp = self.components[i];
+        liquidComp[i] = comp.composition;
+    }
+    [self initializeComponentKi];
+    
+    double F;
+    double dFdP;
+    double Pj = [self initializeSaturatePressureForTemperature:self.temperature];
+    double Pj1 = Pj;
+    CubicGas *gasB;
+    gasB = [[CubicGas alloc] initWithComponents:self.components isLiquid:NO];
+    gasB.temperature = self.temperature;
+    
+    CubicGas *liquidB;
+    liquidB = [[CubicGas alloc] initWithComponents:self.components isLiquid:YES];
+    liquidB.temperature = self.temperature;
+    liquidB.composition = liquidComp;
+    
+    do {
+        Pj = Pj1;
+        double gasComp[self.components.count];
+        for (int i=0; i<self.components.count; i++) {
+            Component *comp = self.components[i];
+            gasComp[i] = comp.composition * _componentKi[i];
+            NSLog(@"%g",_componentKi[i]);
+            NSLog(@"%g",gasComp[i]);
+        }
+        
+        [self normalizeComposition:gasComp];
+        
+        gasB.pressure = Pj;
+        gasB.composition = gasComp;
+        [gasB checkDegreeOfFreedom];
+        double *gasDlnphiDP = gasB.DLnPhiDP;
+        
+        liquidB.pressure = Pj;
+        [liquidB checkDegreeOfFreedom];
+        double *liquidDlnphiDP = liquidB.DLnPhiDP;
+        
+        F = -1;
+        dFdP = 0;
+        for (int i=0; i<self.components.count; i++) {
+            Component *comp = self.components[i];
+            _componentKi[i] = exp(liquidB.componentLnPhi[i] - gasB.componentLnPhi[i]);
+            NSLog(@"%g",_componentKi[i]);
+            F += comp.composition * _componentKi[i];
+            dFdP += comp.composition * _componentKi[i] * (liquidDlnphiDP[i] - gasDlnphiDP[i]);
+        }
+        
+        Pj1 = Pj - F/dFdP;
+        
+    } while (ABS(Pj1-Pj)>0.1);
+    
+    return Pj1;
+}
+
+#pragma mark - Dew T
+
+- (double)calcDewT {
+    if (YES)
+        return [self calcDewT_phiphi];
+    else
+        return [self calcDewT_gammaphi];
+}
+
+- (double)calcDewT_phiphi {
+#warning Falta Bubble T phi/phi
+
+    return 0;
+}
+
+- (double)calcDewT_gammaphi {
+#warning Falta Dew T gamma/phi
+    
+    return 0;
+}
+
+#pragma mark - Bubble T
+
+- (double)calcBubbleT {
+    if (YES)
+        return [self calcBubbleT_phiphi];
+    else
+        return [self calcBubbleT_gammaphi];
+}
+
+- (double)calcBubbleT_gammaphi {
+#warning Falta Bubble T gamma/phi
+    
+    return 0;
+}
+
+- (double)calcBubbleT_phiphi {
+#warning Falta Bubble T phi/phi
+
+    return 0;
+}
+
+#pragma mark - Auxiliares
 
 - (double)initializeSaturatePressureForTemperature:(double)temp {
     //Dong and Lienhard
@@ -194,70 +367,27 @@
     return p;
 }
 
-- (double)calcDewP {
-    double gasComp[self.components.count];
+- (BOOL)compareOldXi:(double [])xi andOldYi:(double [])yi {
+    BOOL cont = NO;
+    double error = 0.0001;
     for (int i=0; i<self.components.count; i++) {
-        Component *comp = self.components[i];
-        gasComp[i] = comp.composition;
+        if ((ABS(xi[i] - _liquidComposition[i]) > error) || (ABS(yi[i] - _gasComposition[i]) > error)) {
+            cont = YES;
+            break;
+        }
     }
-    
-    [self initializeComponentKi];
-    
-    return 0;
+    return cont;
 }
 
-- (double)calcBubbleP {
-    double liquidComp[self.components.count];
+- (void)normalizeComposition:(double *)comp {
+    double total = 0;
     for (int i=0; i<self.components.count; i++) {
-        Component *comp = self.components[i];
-        liquidComp[i] = comp.composition;
+        total += comp[i];
     }
-    [self initializeComponentKi];
     
-    double F;
-    double dFdP;
-    double Pj = [self initializeSaturatePressureForTemperature:self.temperature];
-    double Pj1 = Pj;
-    RealGas *gasB;
-    RealGas *liquidB;
-    liquidB = [[RealGas alloc] initWithComponents:self.components isLiquid:YES];
-    
-    liquidB.temperature = self.temperature;
-    liquidB.pressure = self.pressure;
-    liquidB.composition = liquidComp;
-    [liquidB checkDegreeOfFreedom];
-    double *liquidDlnphiDP = [liquidB derivateLnPhiInPressure];
-    
-    do {
-        Pj = Pj1;
-        double gasComp[self.components.count];
-        for (int i=0; i<self.components.count; i++) {
-            Component *comp = self.components[i];
-            gasComp[i] = comp.composition * _componentKi[i];
-        }
-        
-        gasB = [[RealGas alloc] initWithComponents:self.components isLiquid:NO];
-        
-        gasB.temperature = self.temperature;
-        gasB.pressure = self.pressure;
-        gasB.composition = gasComp;
-        [gasB checkDegreeOfFreedom];
-        
-        F = -1;
-        dFdP = 0;
-        double *gasDlnphiDP = [gasB derivateLnPhiInPressure];
-        for (int i=0; i<self.components.count; i++) {
-            Component *comp = self.components[i];
-            _componentKi[i] = exp(liquidB.lnPhi - gasB.lnPhi);
-            F += comp.composition * _componentKi[i];
-            dFdP +=comp.composition * _componentKi[i] * (liquidDlnphiDP[i] - gasDlnphiDP[i]);
-        }
-        
-        Pj1 = Pj - F/dFdP;
-        
-    } while (ABS(Pj1-Pj)>0.1);
-    
-    return Pj1;
+    for (int j=0; j<self.components.count; j++) {
+        comp[j] = comp[j]/total;
+    }
 }
 
 @end

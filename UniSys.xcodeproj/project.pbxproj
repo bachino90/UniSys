@@ -40,6 +40,8 @@
 		EB32AB421880AC1A00C15DC7 /* RealGas.m in Sources */ = {isa = PBXBuildFile; fileRef = EB32AB411880AC1A00C15DC7 /* RealGas.m */; };
 		EB32AB461880ADE700C15DC7 /* Pressure.m in Sources */ = {isa = PBXBuildFile; fileRef = EB32AB451880ADE700C15DC7 /* Pressure.m */; };
 		EB32AB491880ADFB00C15DC7 /* Temperature.m in Sources */ = {isa = PBXBuildFile; fileRef = EB32AB481880ADFB00C15DC7 /* Temperature.m */; };
+		EB4A3742188F382700A10CC8 /* MixerEquipment.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4A3741188F382700A10CC8 /* MixerEquipment.m */; };
+		EB4A3745188F383B00A10CC8 /* TeeEquipment.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4A3744188F383B00A10CC8 /* TeeEquipment.m */; };
 		EBEA3BDC1881DA7200395EA1 /* Component.m in Sources */ = {isa = PBXBuildFile; fileRef = EBEA3BDB1881DA7200395EA1 /* Component.m */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +113,10 @@
 		EB32AB451880ADE700C15DC7 /* Pressure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pressure.m; sourceTree = "<group>"; };
 		EB32AB471880ADFB00C15DC7 /* Temperature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Temperature.h; sourceTree = "<group>"; };
 		EB32AB481880ADFB00C15DC7 /* Temperature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Temperature.m; sourceTree = "<group>"; };
+		EB4A3740188F382700A10CC8 /* MixerEquipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixerEquipment.h; sourceTree = "<group>"; };
+		EB4A3741188F382700A10CC8 /* MixerEquipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MixerEquipment.m; sourceTree = "<group>"; };
+		EB4A3743188F383B00A10CC8 /* TeeEquipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeeEquipment.h; sourceTree = "<group>"; };
+		EB4A3744188F383B00A10CC8 /* TeeEquipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeeEquipment.m; sourceTree = "<group>"; };
 		EBEA3BDA1881DA7200395EA1 /* Component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Component.h; sourceTree = "<group>"; };
 		EBEA3BDB1881DA7200395EA1 /* Component.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Component.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,6 +183,10 @@
 				EB2017461884799E00641B23 /* CompressorEquipment.m */,
 				EB201748188479BA00641B23 /* TurbineEquipment.h */,
 				EB201749188479BA00641B23 /* TurbineEquipment.m */,
+				EB4A3740188F382700A10CC8 /* MixerEquipment.h */,
+				EB4A3741188F382700A10CC8 /* MixerEquipment.m */,
+				EB4A3743188F383B00A10CC8 /* TeeEquipment.h */,
+				EB4A3744188F383B00A10CC8 /* TeeEquipment.m */,
 			);
 			name = Equipments;
 			sourceTree = "<group>";
@@ -340,6 +350,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Emiliano Bivachi";
 				TargetAttributes = {
+					EB308F06188092B500EC117D = {
+						DevelopmentTeam = 6EMVP83UP2;
+					};
 					EB308F27188092B500EC117D = {
 						TestTargetID = EB308F06188092B500EC117D;
 					};
@@ -391,6 +404,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB201738188477C900641B23 /* PumpEquipment.m in Sources */,
+				EB4A3745188F383B00A10CC8 /* TeeEquipment.m in Sources */,
 				EB201741188478CB00641B23 /* FlashEquipment.m in Sources */,
 				EB201732188476CA00641B23 /* Volumen.m in Sources */,
 				EB20173E1884780D00641B23 /* HeatExchangerEquipment.m in Sources */,
@@ -406,6 +420,7 @@
 				EB308F21188092B500EC117D /* USViewController.m in Sources */,
 				EBEA3BDC1881DA7200395EA1 /* Component.m in Sources */,
 				EB308F17188092B500EC117D /* main.m in Sources */,
+				EB4A3742188F382700A10CC8 /* MixerEquipment.m in Sources */,
 				EB20174A188479BA00641B23 /* TurbineEquipment.m in Sources */,
 				EB20172C188476A000641B23 /* MolarFlow.m in Sources */,
 				EB2017471884799E00641B23 /* CompressorEquipment.m in Sources */,
@@ -541,10 +556,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UniSys/UniSys-Prefix.pch";
 				INFOPLIST_FILE = "UniSys/UniSys-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
@@ -555,10 +573,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UniSys/UniSys-Prefix.pch";
 				INFOPLIST_FILE = "UniSys/UniSys-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};

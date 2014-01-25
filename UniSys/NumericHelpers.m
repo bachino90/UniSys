@@ -22,12 +22,13 @@
 - (NSDictionary *)regulaFalsiMethod:(FunctionBlock)functionBlock infLimit:(double)a supLimit:(double)b {
     NSDictionary *results;
     
-    double error = 0.001;
+    double error = 0.000001;
     
     double c;
     double fa;
     double fb;
-    double fc;
+    double fc=1;
+    BOOL isThereAZero = YES;
     
     while (ABS(fc) > error) {
         fa = functionBlock(a);
@@ -40,10 +41,85 @@
             a = c;
         } else if (fc == 0) {
             break;
+        } else if ((fa > 0 && fb > 0) || (fa < 0 && fb < 0)) {
+            isThereAZero = NO;
+            break;
         }
     }
     
-    results = [NSDictionary dictionaryWithObjectsAndKeys:@(c),@"ZEROS", nil];
+    if (isThereAZero) {
+        results = [NSDictionary dictionaryWithObjectsAndKeys:@(c),@"ZEROS",@(YES),@"Hay zero?", nil];
+    } else {
+        results = [NSDictionary dictionaryWithObjectsAndKeys:@(NO),@"Hay zero?", nil];
+    }
+    
+    
+    return results;
+}
+
+- (NSDictionary *)puntoFijoMethod:(FunctionBlock)functionBlock initValue:(double)a {
+    
+    NSDictionary *results;
+    
+    double error = 0.000001;
+    
+    double z = a+1;
+    double zi = a;
+    
+    while (ABS(z-zi) > error) {
+        z = zi;
+        zi = functionBlock(z);
+    }
+    
+    results = [NSDictionary dictionaryWithObjectsAndKeys:@(zi),@"ZEROS",@(YES),@"Hay zero?", nil];
+    
+    return results;
+}
+
+- (NSDictionary *)puntoFijoMethod:(FunctionBlock)functionBlock initValue:(double)a infLimit:(double)inf supLimit:(double)sup {
+    
+    NSDictionary *results;
+    
+    double error = 0.000001;
+    
+    double z = a+1;
+    double zi = a;
+    NSString *errMessage = @"";
+    BOOL thereIsZero = YES;
+
+    while (ABS(z-zi) > error) {
+        z = zi;
+        zi = functionBlock(z);
+        if (zi<inf) {
+            errMessage = @"INF_ERROR";
+            thereIsZero = NO;
+            break;
+        } else if (zi>sup) {
+            errMessage = @"SUP_ERROR";
+            thereIsZero = NO;
+            break;
+        }
+    }
+    
+    results = [NSDictionary dictionaryWithObjectsAndKeys:@(zi),@"ZEROS",@(thereIsZero),@"Hay zero?",errMessage,@"MESSAGE", nil];
+    
+    return results;
+}
+
+- (NSDictionary *)newtonRaphsonMethod:(FunctionBlock)functionBlock derivate:(FunctionBlock)derivateBlock initValue:(double)a {
+    NSDictionary *results;
+    
+    double error = 0.001;
+    
+    double z = a+1;
+    double zi = a;
+    
+    while (ABS(z-zi) > error) {
+        z = zi;
+        zi = z - functionBlock(z)/derivateBlock(z);
+    }
+    
+    results = [NSDictionary dictionaryWithObjectsAndKeys:@(zi),@"ZEROS", nil];
     
     return results;
 }

@@ -14,7 +14,11 @@
 @property (weak, nonatomic) IBOutlet UITextField *temperatureTextField;
 @property (weak, nonatomic) IBOutlet UITextField *pressureTextField;
 @property (weak, nonatomic) IBOutlet UIButton *calculateButton;
+@property (weak, nonatomic) IBOutlet UISwitch *isLiquidSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *zLabel;
+@property (weak, nonatomic) IBOutlet UILabel *volumenLabel;
 @property (strong, nonatomic) RealFluid *fluido;
+@property (strong, nonatomic) CubicGas *cubicFluido;
 @end
 
 @implementation USViewController
@@ -23,25 +27,38 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    Component *metano = [[Component alloc]initWithName:@"metano"];
-    metano.composition = 0.5;
-    Component *etano = [[Component alloc]initWithName:@"propano"];
-    etano.composition = 0.5;
+    Component *octano = [[Component alloc]initWithName:@"octano"];
+    octano.composition = 1.0;
+    Component *nonano = [[Component alloc]initWithName:@"nonano"];
+    nonano.composition = 0.2;
+    Component *decano = [[Component alloc]initWithName:@"decano"];
+    decano.composition = 0.2;
     
-    self.fluido = [[RealFluid alloc] initWithComponents:@[metano, etano]];
+    /*
+    self.fluido = [[RealFluid alloc] initWithComponents:@[octano, nonano, decano]];
     
     self.fluido.temperature = 250.0; //K
-    self.fluido.pressure = 103025;   //Pa
-    
-    self.temperatureTextField.text = [NSString stringWithFormat:@"%f",self.fluido.temperature];
-    self.pressureTextField.text = [NSString stringWithFormat:@"%f",self.fluido.pressure];
+    self.fluido.pressure = 101325;   //Pa
+    */
+    //self.cubicFluido = [[CubicGas alloc] initWithComponents:@[octano]];
+    //self.temperatureTextField.text = [NSString stringWithFormat:@"%f",self.fluido.temperature];
+    //self.pressureTextField.text = [NSString stringWithFormat:@"%f",self.fluido.pressure];
     
 }
 
 - (IBAction)calculate:(UIButton *)sender {
-    self.fluido.temperature = [self.temperatureTextField.text doubleValue];
-    self.fluido.pressure = [self.temperatureTextField.text doubleValue];
-    [self.fluido calcPropertiesPT];
+    Component *decano = [[Component alloc]initWithName:@"decano"];
+    decano.composition = 1.0;
+    Component *nonano = [[Component alloc]initWithName:@"nonano"];
+    nonano.composition = 0.2;
+    self.cubicFluido = [[CubicGas alloc] initWithComponents:@[decano] isLiquid:self.isLiquidSwitch.isOn];
+    self.cubicFluido.temperature = [self.temperatureTextField.text doubleValue];
+    self.cubicFluido.pressure = [self.pressureTextField.text doubleValue];
+    //[self.fluido calcPropertiesPT];
+    [self.cubicFluido checkDegreeOfFreedom];
+    
+    self.zLabel.text = [NSString stringWithFormat:@"%g",self.cubicFluido.z];
+    self.volumenLabel.text = [NSString stringWithFormat:@"%g", self.cubicFluido.volumen];
 }
 
 

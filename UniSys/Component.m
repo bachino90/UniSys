@@ -46,18 +46,65 @@
     if (self) {
         if ([name isEqualToString:@"metano"]) {
             self.tc = 190.56;
-            self.pc = 4599000;
+            self.pc = 4599000.0;
             self.vc = 98.6;
             self.zc = 0.286;
             self.w = 0.011;
-            
-        } else { //propano
+        } else if ([name isEqualToString:@"etano"]) { //propano
+            self.tc = 305.3;
+            self.pc = 4872000.0;
+            self.vc = 145.5;
+            self.zc = 0.279;
+            self.w = 0.1;
+        } else if ([name isEqualToString:@"propano"]) { //propano
             self.tc = 369.83;
-            self.pc = 4248000;
+            self.pc = 4248000.0;
             self.vc = 200.0;
             self.zc = 0.276;
             self.w = 0.152;
-        }        
+        } else if ([name isEqualToString:@"butano"]) { //propano
+            self.tc = 425.1;
+            self.pc = 3796000.0;
+            self.vc = 255.0;
+            self.zc = 0.274;
+            self.w = 0.2;
+        } else if ([name isEqualToString:@"pentano"]) { //propano
+            self.tc = 469.7;
+            self.pc = 3370000.0;
+            self.vc = 313.0;
+            self.zc = 0.270;
+            self.w = 0.252;
+        } else if ([name isEqualToString:@"hexano"]) { //propano
+            self.tc = 507.6;
+            self.pc = 3025000.0;
+            self.vc = 371.0;
+            self.zc = 0.266;
+            self.w = 0.301;
+        } else if ([name isEqualToString:@"heptano"]) { //propano
+            self.tc = 540.2;
+            self.pc = 2740000.0;
+            self.vc = 428.0;
+            self.zc = 0.261;
+            self.w = 0.350;
+        } else if ([name isEqualToString:@"octano"]) { //propano
+            self.tc = 568.7;
+            self.pc = 2490000.0;
+            self.vc = 486.0;
+            self.zc = 0.256;
+            self.w = 0.4;
+        } else if ([name isEqualToString:@"nonano"]) { //propano
+            self.tc = 594.6;
+            self.pc = 2290000.0;
+            self.vc = 544.0;
+            self.zc = 0.252;
+            self.w = 0.444;
+        } else if ([name isEqualToString:@"decano"]) { //propano
+            self.tc = 617.7;
+            self.pc = 2110000.0;
+            self.vc = 600.0;
+            self.zc = 0.247;
+            self.w = 0.492;
+        }
     }
     return self;
 }

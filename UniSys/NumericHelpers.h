@@ -15,5 +15,8 @@ typedef double (^FunctionBlock) (double);
 + (instancetype)sharedInstance;
 
 - (NSDictionary *)regulaFalsiMethod:(FunctionBlock)function infLimit:(double)a supLimit:(double)b;
+- (NSDictionary *)newtonRaphsonMethod:(FunctionBlock)functionBlock derivate:(FunctionBlock)derivateBlock initValue:(double)a;
+- (NSDictionary *)puntoFijoMethod:(FunctionBlock)functionBlock initValue:(double)a;
+- (NSDictionary *)puntoFijoMethod:(FunctionBlock)functionBlock initValue:(double)a infLimit:(double)inf supLimit:(double)sup;
 
 @end

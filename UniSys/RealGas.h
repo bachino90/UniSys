@@ -10,23 +10,9 @@
 
 @interface RealGas : NSObject 
 
-- (instancetype)initWithComponents:(NSArray *)comp isLiquid:(BOOL)isLiquid;
-- (instancetype)initWithComponents:(NSArray *)comp;
+- (instancetype)initWithType:(FluidModelType)type andComponents:(NSArray *)comp isLiquid:(BOOL)isLiquid;
 
-@property (nonatomic) double pressure;    //   Pa
-@property (nonatomic) double temperature; //   K
-@property (nonatomic) double volumen;     //   m3/mol
-@property (nonatomic, strong) NSArray *components;
-@property (nonatomic) double *composition;
-@property (nonatomic, readonly) double *componentLnPhi;
-
-@property (nonatomic, readonly) double z;
-@property (nonatomic, readonly) double enthalpy;
-@property (nonatomic, readonly) double entropy;
-
-@property (nonatomic, readonly) double lnPhi;
-
-- (void)checkDegreeOfFreedom;
-- (double *)derivateLnPhiInPressure;
+@property (nonatomic, readonly) NSString *modelName;
+@property (nonatomic, readonly) FluidModelType modelType;
 
 @end

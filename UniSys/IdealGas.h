@@ -18,6 +18,8 @@
     double _idealEnthalpy;
     double _idealEntropy;
     
+    double *_componentLnPhi;
+    
     BOOL _isLiquid;
 }
 
@@ -26,12 +28,12 @@
 
 @property (nonatomic) double pressure;    //   Pa
 @property (nonatomic) double temperature; //   K
-@property (nonatomic) double volumen;     //   m3/mol
 
 @property (nonatomic, strong) NSArray *components;
 @property (nonatomic) double *composition;
 
 @property (nonatomic, readonly) double z;
+@property (nonatomic, readonly) double volumen;     //   m3/mol
 
 @property (nonatomic, readonly) double idealEnthalpy;
 @property (nonatomic, readonly) double idealEntropy;
@@ -39,6 +41,9 @@
 @property (nonatomic, readonly) double enthalpy;
 @property (nonatomic, readonly) double entropy;
 
+@property (nonatomic, readonly) double *componentLnPhi;
+
 - (void)checkDegreeOfFreedom;
+- (void)calcIdealProperties;
 
 @end

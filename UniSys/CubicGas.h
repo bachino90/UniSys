@@ -8,23 +8,19 @@
 
 #import "IdealGas.h"
 
-typedef enum {
-    PengRobinsonEOS,
-    VanDerWaalsEOS,
-    WilsonEOS,
-    RedlichKwongEOS,
-    SoaveEOS,
-    PenelouxEOS,
-    PatelTejaEOS,
-    StryjekVeraEOS
-} CubicEOS;
-
 @interface CubicGas : IdealGas
 
-- (instancetype)initWithType:(CubicEOS)type andComponents:(NSArray *)comp isLiquid:(BOOL)isLiquid;
-- (instancetype)initWithType:(CubicEOS)type andComponents:(NSArray *)comp;
+- (instancetype)initWithType:(FluidModelType)type andComponents:(NSArray *)comp isLiquid:(BOOL)isLiquid;
+- (instancetype)initWithType:(FluidModelType)type andComponents:(NSArray *)comp;
+- (instancetype)initWithComponents:(NSArray *)comp isLiquid:(BOOL)isLiquid;
+- (instancetype)initWithComponents:(NSArray *)comp;
 
-@property (nonatomic, readonly) CubicEOS type;
+@property (nonatomic, readonly) FluidModelType type;
 @property (nonatomic, readonly) NSString *eosName;
+
+@property (nonatomic, readonly) double *DLnPhiDP;
+@property (nonatomic, readonly) double *DLnPhiDT;
+
+- (void)setBinaryParameters:(double **)kij;
 
 @end
