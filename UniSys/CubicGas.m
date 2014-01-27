@@ -301,15 +301,56 @@
         return zCuad * z + self.c_alpha * z + self.c_beta * z + self.c_gamma;
     };
     */
-    double a = 1;
     double b = self.c_alpha;
     double c = self.c_beta;
     double d = self.c_gamma;
+    double *z = [[NumericHelpers sharedInstance] solveCubicEquationZ3:b Z2:c Z:d];
+    /*
+    double *z1 = [[NumericHelpers sharedInstance] solveCubicEquationZ3:3 Z2:6 Z:5];
+    double *z2 = [[NumericHelpers sharedInstance] solveCubicEquationZ3:0 Z2:-15 Z:-4];
+    double *z3 = [[NumericHelpers sharedInstance] solveCubicEquationZ3:5/2.0 Z2:2 Z:0.5];
+    double *z4 = [[NumericHelpers sharedInstance] solveCubicEquationZ3:2 Z2:1 Z:2];
+    double *z5 = [[NumericHelpers sharedInstance] solveCubicEquationZ3:2 Z2:-1 Z:-2];
+    */
     
-    double disc = 18*a*b*c*d - 4*pow(b, 3)*d + pow(b*c, 2) - 4*a*pow(c, 3) - 27*pow(a*d, 2);
-    NSLog(@"Discriminante: %g",disc);
+    double numZeros = z[0];
+    if (numZeros == 1) {
+        if (z[1] > 0.0 && z[1] < 5.0) {
+            self.z = z[1];
+            self.volumen = self.z * R_CONST * self.temperature / self.pressure;
+        }
+    } else if (numZeros == 2) {
+        
+    } else if (numZeros == 3) {
+        if (z[1]>0) {
+            if (_isLiquid) {
+                self.z = z[3];
+            } else {
+                self.z = z[1];
+            }
+            self.volumen = self.z * R_CONST * self.temperature / self.pressure;
+        } else if (z[2] > 0) {
+            if (_isLiquid) {
+                self.z = z[2];
+            } else {
+                self.z = z[1];
+            }
+            self.volumen = self.z * R_CONST * self.temperature / self.pressure;
+        } else if (z[3] > 0) {
+            self.z = z[3];
+        }
+    }
+    
+    
+    
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////// ////////////////////// ////////////////////////////////////////////
+    
+    
     
     NSDictionary *results;
+    /*
     if (_isLiquid) {
         FunctionBlock zLiqFunction = ^(double z){
             return self.c_B+(z+self.c_sigma_2*self.c_B)*(z+self.c_sigma_1*self.c_B)*((1+self.c_B-z)/(self.c_A));
@@ -334,7 +375,7 @@
         }
         [self calcIntensiveProperties];
     }
-    
+    */
     return results;
 }
 

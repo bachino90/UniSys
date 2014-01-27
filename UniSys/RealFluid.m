@@ -110,7 +110,7 @@
     }
 }
 
-- (void)initializeComponentKi {
+- (void)initializeComponentKiWithPressure:(double)pressure {
     free(_componentKi);
     free(_liquidComposition);
     free(_gasComposition);
@@ -119,7 +119,7 @@
     _gasComposition = (double *)calloc(self.components.count,sizeof(double));
     for (int i=0; i<self.components.count; i++) {
         Component *comp = self.components[i];
-        _componentKi[i] = [self wilsonKForComponent:comp pressure:self.pressure andTemperature:self.temperature];
+        _componentKi[i] = [self wilsonKForComponent:comp pressure:pressure andTemperature:self.temperature];
     }
     
 }
@@ -141,7 +141,7 @@
     if (!self.isDeterminated)
         return;
     
-    [self initializeComponentKi];
+    [self initializeComponentKiWithPressure:self.pressure];
     
     FunctionBlock betaFunction = ^(double beta) {
         __block double f = 0;
@@ -227,7 +227,6 @@
         gasComp[i] = comp.composition;
     }
     
-    [self initializeComponentKi];
     
     return 0;
 }
@@ -258,18 +257,20 @@
         Component *comp = self.components[i];
         liquidComp[i] = comp.composition;
     }
-    [self initializeComponentKi];
     
     double F;
     double dFdP;
     double Pj = [self initializeSaturatePressureForTemperature:self.temperature];
     double Pj1 = Pj;
+    
+    [self initializeComponentKiWithPressure:Pj];
+    
     CubicGas *gasB;
     gasB = [[CubicGas alloc] initWithComponents:self.components isLiquid:NO];
     gasB.temperature = self.temperature;
     
     CubicGas *liquidB;
-    liquidB = [[CubicGas alloc] initWithComponents:self.components isLiquid:YES];
+    liquidB = [[CubicGas alloc] initWithComponents:self.components isLiquid:NO];
     liquidB.temperature = self.temperature;
     liquidB.composition = liquidComp;
     

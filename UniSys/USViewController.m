@@ -46,12 +46,25 @@
     
 }
 
-- (IBAction)calculate:(UIButton *)sender {
+- (IBAction)calculateFluid:(UIButton *)sender {
     Component *decano = [[Component alloc]initWithName:@"decano"];
-    decano.composition = 1.0;
+    decano.composition = 0.8;
     Component *nonano = [[Component alloc]initWithName:@"nonano"];
     nonano.composition = 0.2;
-    self.cubicFluido = [[CubicGas alloc] initWithComponents:@[decano] isLiquid:self.isLiquidSwitch.isOn];
+    
+    self.fluido = [[RealFluid alloc] initWithComponents:@[nonano, decano]];
+    
+    self.fluido.temperature = [self.temperatureTextField.text doubleValue];
+    self.fluido.pressure = [self.pressureTextField.text doubleValue];
+    [self.fluido calcPropertiesPT];
+}
+
+- (IBAction)calculate:(UIButton *)sender {
+    Component *decano = [[Component alloc]initWithName:@"decano"];
+    decano.composition = 0.8;
+    Component *nonano = [[Component alloc]initWithName:@"nonano"];
+    nonano.composition = 0.2;
+    self.cubicFluido = [[CubicGas alloc] initWithComponents:@[decano,nonano] isLiquid:self.isLiquidSwitch.isOn];
     self.cubicFluido.temperature = [self.temperatureTextField.text doubleValue];
     self.cubicFluido.pressure = [self.pressureTextField.text doubleValue];
     //[self.fluido calcPropertiesPT];

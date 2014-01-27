@@ -14,6 +14,7 @@ typedef double (^FunctionBlock) (double);
 
 + (instancetype)sharedInstance;
 
+- (double *)solveCubicEquationZ3:(double)a Z2:(double)b Z:(double)c;
 - (NSDictionary *)regulaFalsiMethod:(FunctionBlock)function infLimit:(double)a supLimit:(double)b;
 - (NSDictionary *)newtonRaphsonMethod:(FunctionBlock)functionBlock derivate:(FunctionBlock)derivateBlock initValue:(double)a;
 - (NSDictionary *)puntoFijoMethod:(FunctionBlock)functionBlock initValue:(double)a;
