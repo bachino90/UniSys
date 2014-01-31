@@ -55,7 +55,7 @@
 - (void)calcPropertiesPT {
     if (!self.isDeterminated)
         return;
-        
+    
     double bubblePressure = [self calcBubbleP];
     double dewPressure = [self calcDewP];
     
@@ -260,7 +260,7 @@
     
     double F;
     double dFdP;
-    double Pj = [self initializeSaturatePressureForTemperature:self.temperature];
+    double Pj = 10000;//[self initializeSaturatePressureForTemperature:self.temperature];
     double Pj1 = Pj;
     
     [self initializeComponentKiWithPressure:Pj];
@@ -270,12 +270,71 @@
     gasB.temperature = self.temperature;
     
     CubicGas *liquidB;
-    liquidB = [[CubicGas alloc] initWithComponents:self.components isLiquid:NO];
+    liquidB = [[CubicGas alloc] initWithComponents:self.components isLiquid:YES];
     liquidB.temperature = self.temperature;
     liquidB.composition = liquidComp;
     
+    /*
+    double Kixi_1 = 0;
+    double Kixi_2 = 1;
     do {
         Pj = Pj1;
+        
+        liquidB.pressure = Pj;
+        [liquidB checkDegreeOfFreedom];
+        
+        while (ABS(Kixi_1 - Kixi_2)>0.01) {
+            
+            double gasComp[self.components.count];
+            Kixi_1 = 0;
+            for (int i=0; i<self.components.count; i++) {
+                Component *comp = self.components[i];
+                _componentKi[i] = exp(liquidB.componentLnPhi[i]);
+                gasComp[i] = comp.composition * _componentKi[i];
+                Kixi_1 += gasComp[i];
+                NSLog(@"%g",_componentKi[i]);
+                NSLog(@"%g",gasComp[i]);
+            }
+            for (int j=0; j<self.components.count; j++) {
+                gasComp[j] = gasComp[j]/Kixi_1;
+                NSLog(@"normalizada :%g",gasComp[j]);
+            }
+            
+            gasB.pressure = Pj;
+            gasB.composition = gasComp;
+            [gasB checkDegreeOfFreedom];
+            
+            Kixi_2 = 0;
+            for (int i=0; i<self.components.count; i++) {
+                _componentKi[i] = exp(liquidB.componentLnPhi[i] - gasB.componentLnPhi[i]);
+                NSLog(@"%g",_componentKi[i]);
+                Kixi_2 += gasComp[i] * _componentKi[i];
+            }
+            
+        }
+        Kixi_2 = 1;
+        Kixi_1 = 0;
+        
+        double *gasDlnphiDP = gasB.DLnPhiDP;
+        double *liquidDlnphiDP = liquidB.DLnPhiDP;
+        F = -1;
+        dFdP = 0;
+        for (int i=0; i<self.components.count; i++) {
+            Component *comp = self.components[i];
+            _componentKi[i] = exp(liquidB.componentLnPhi[i] - gasB.componentLnPhi[i]);
+            NSLog(@"%g",_componentKi[i]);
+            F += comp.composition * _componentKi[i];
+            dFdP += comp.composition * _componentKi[i] * (liquidDlnphiDP[i] - gasDlnphiDP[i]);
+        }
+        
+        Pj1 = Pj - F/dFdP;
+        
+    } while (ABS(Pj1-Pj)>0.1);
+    */
+    
+    do {
+        Pj = Pj1;
+        
         double gasComp[self.components.count];
         for (int i=0; i<self.components.count; i++) {
             Component *comp = self.components[i];
@@ -283,7 +342,6 @@
             NSLog(@"%g",_componentKi[i]);
             NSLog(@"%g",gasComp[i]);
         }
-        
         [self normalizeComposition:gasComp];
         
         gasB.pressure = Pj;
@@ -309,6 +367,41 @@
         
     } while (ABS(Pj1-Pj)>0.1);
     
+    /*
+    Pj = 100;
+    for (int i=0; i<400; i++) {
+        double gasComp[self.components.count];
+        for (int i=0; i<self.components.count; i++) {
+            Component *comp = self.components[i];
+            gasComp[i] = comp.composition * _componentKi[i];
+            NSLog(@"%g",_componentKi[i]);
+            NSLog(@"%g",gasComp[i]);
+        }
+        [self normalizeComposition:gasComp];
+        
+        gasB.pressure = Pj;
+        gasB.composition = gasComp;
+        [gasB checkDegreeOfFreedom];
+        double *gasDlnphiDP = gasB.DLnPhiDP;
+        
+        liquidB.pressure = Pj;
+        [liquidB checkDegreeOfFreedom];
+        double *liquidDlnphiDP = liquidB.DLnPhiDP;
+        
+        F = -1;
+        dFdP = 0;
+        for (int i=0; i<self.components.count; i++) {
+            Component *comp = self.components[i];
+            _componentKi[i] = exp(liquidB.componentLnPhi[i] - gasB.componentLnPhi[i]);
+            NSLog(@"K[%i] = %g",i,_componentKi[i]);
+            F += comp.composition * _componentKi[i];
+            dFdP += comp.composition * _componentKi[i] * (liquidDlnphiDP[i] - gasDlnphiDP[i]);
+        }
+        
+        NSLog(@"P = %g ||F = %g",Pj,F);
+        Pj += 5000;
+    }
+    */
     return Pj1;
 }
 
@@ -388,6 +481,7 @@
     
     for (int j=0; j<self.components.count; j++) {
         comp[j] = comp[j]/total;
+        NSLog(@"normalizada :%g",comp[j]);
     }
 }
 

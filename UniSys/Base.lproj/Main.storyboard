@@ -48,8 +48,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M8T-YQ-HYe">
-                                <rect key="frame" x="527" y="108" width="214" height="38"/>
+                                <rect key="frame" x="527" y="104" width="214" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                 <state key="normal" title="Cubic">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -59,18 +60,18 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6pk-me-ox6">
-                                <rect key="frame" x="527" y="154" width="214" height="55"/>
+                                <rect key="frame" x="527" y="150" width="214" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                 <state key="normal" title="Fluid">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="calculate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="g6d-Rw-TIi"/>
                                     <action selector="calculateFluid:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kpg-fH-ehH"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Metano/Etano (1:1)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QMp-ku-vZt">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Propiedades" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QMp-ku-vZt">
                                 <rect key="frame" x="70" y="40" width="671" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="32"/>
@@ -104,6 +105,17 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dLB-Se-6pO">
+                                <rect key="frame" x="10" y="369" width="748" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Decano"/>
+                                    <segment title="Decano(0.8)/Nonano(0.2)"/>
+                                    <segment title="Nitrogeno(0.4)/Metano(0.6)"/>
+                                    <segment title="Metano(0.5)/Butano(0.5)"/>
+                                    <segment title="Propano"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -111,6 +123,7 @@
                         <outlet property="calculateButton" destination="M8T-YQ-HYe" id="ATS-7B-94G"/>
                         <outlet property="isLiquidSwitch" destination="bbd-Nn-MjC" id="eQn-c3-Uvu"/>
                         <outlet property="pressureTextField" destination="kMC-m5-VVb" id="kN4-7A-iSD"/>
+                        <outlet property="selectComponent" destination="dLB-Se-6pO" id="baU-oy-9IM"/>
                         <outlet property="temperatureTextField" destination="shr-Ys-NWK" id="hIc-oU-yvN"/>
                         <outlet property="volumenLabel" destination="bUN-rP-hPe" id="ag3-of-Nbc"/>
                         <outlet property="zLabel" destination="aaJ-gx-FFu" id="z61-ya-Ynq"/>

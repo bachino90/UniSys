@@ -18,6 +18,8 @@
     double _idealEnthalpy;
     double _idealEntropy;
     
+    double _isothermalCompressibility;
+    
     double *_componentLnPhi;
     
     BOOL _isLiquid;
@@ -40,6 +42,8 @@
 
 @property (nonatomic, readonly) double enthalpy;
 @property (nonatomic, readonly) double entropy;
+
+@property (nonatomic, readonly) double isothermalCompressibility;
 
 @property (nonatomic, readonly) double *componentLnPhi;
 

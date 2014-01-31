@@ -22,28 +22,17 @@
 
 // f(z) = z3 + a*z2 + b*z +c
 - (double *)solveCubicEquationZ3:(double)a Z2:(double)b Z:(double)c {
-    
+    NSLog(@"Cubica Analitica");
     double *x = NULL;
-    double Q = (3*b - pow(a,2))/9.0;
-    double R = (9*a*b-27*c-2*pow(a, 3))/54.0;
-    double R2 = pow(R, 2.0);
-    double Q3 = pow(Q, 3.0);
+    double a2 = a*a;
+    double Q = (3*b - a2)/9;
+    double R = (9*a*b-27*c-2*a*a2)/54;
+    double R2 = R*R;
+    double Q3 = Q*Q*Q;
     double D = Q3 + R2;
         
-    NSLog(@"Solucion Cubica");
-    if (ABS(D) < 1E-15) {
-        x = (double*)calloc(3, sizeof(double));
-        x[0] = 2;
-        double exp = 1/3.0;
-        double S1 = pow(R+sqrt(D), exp);
-        double S2 = pow(R-sqrt(D), exp);
-        x[1] = S1 + S2 - a/3.0;
-        x[2] = -((S1 + S2)/2.0) - a/3.0;
-        NSLog(@"2 : %g",x[1]);
-        NSLog(@"F : %g",x[1]*x[1]*x[1] + a*x[1]*x[1] + b*x[1] + c);
-        NSLog(@"3 : %g",x[2]);
-        NSLog(@"F : %g",x[2]*x[2]*x[2] + a*x[2]*x[2] + b*x[2] + c);
-    } else if (D > 0) {
+    NSLog(@"Solucion Cubica || D=%g",D);
+    if (D > 0) {
         x = (double *)calloc(2, sizeof(double));
         x[0] = 1;
         double S1 = pow(ABS(R) + sqrt(D), 1/3.0);
@@ -61,9 +50,11 @@
         x = (double *)calloc(4, sizeof(double));
         x[0] = 3;
         double phi = acos(R/sqrt(-pow(Q, 3)));
-        x[1] = 2*sqrt(-Q)*cos(phi/3) - a/3.0;
-        x[2] = 2*sqrt(-Q)*cos((phi+4*M_PI)/3) - a/3.0;
-        x[3] = 2*sqrt(-Q)*cos((phi+2*M_PI)/3) - a/3.0;
+        double sqrtQ = 2*sqrt(-Q);
+        double a3 = a/3.0;
+        x[1] = sqrtQ*cos(phi/3) - a3;
+        x[2] = sqrtQ*cos((phi+4*M_PI)/3) - a3;
+        x[3] = sqrtQ*cos((phi+2*M_PI)/3) - a3;
         NSLog(@"2 : %g",x[1]);
         NSLog(@"F : %g",x[1]*x[1]*x[1] + a*x[1]*x[1] + b*x[1] + c);
         NSLog(@"3 : %g",x[2]);
@@ -71,11 +62,12 @@
         NSLog(@"1 : %g",x[3]);
         NSLog(@"F : %g",x[3]*x[3]*x[3] + a*x[3]*x[3] + b*x[3] + c);
     }
-    
+    NSLog(@"End Cubica Anlitica");
     return x;
 }
 
 - (NSDictionary *)regulaFalsiMethod:(FunctionBlock)functionBlock infLimit:(double)a supLimit:(double)b {
+    
     NSDictionary *results;
     
     double error = 0.000001;
@@ -133,7 +125,7 @@
 }
 
 - (NSDictionary *)puntoFijoMethod:(FunctionBlock)functionBlock initValue:(double)a infLimit:(double)inf supLimit:(double)sup {
-    
+    NSLog(@"Punto Fijo");
     NSDictionary *results;
     
     double error = 0.000001;
@@ -158,7 +150,7 @@
     }
     
     results = [NSDictionary dictionaryWithObjectsAndKeys:@(zi),@"ZEROS",@(thereIsZero),@"Hay zero?",errMessage,@"MESSAGE", nil];
-    
+    NSLog(@"End Punto Fijo");
     return results;
 }
 

@@ -283,8 +283,6 @@
     if (self.temperature > 0 && self.components && self.composition) {
         if (self.pressure > 0) {
             [self calcZ_PT];
-        } else if (self.volumen > 0) {
-            [self calcZ_VT];
         }
     }
 }
@@ -295,59 +293,51 @@
     [self calcCubicConstant];
 
     [self calcAlphaBetaGamma];
-    /*
-    FunctionBlock zFunction = ^(double z){
-        double zCuad = z * z;
-        return zCuad * z + self.c_alpha * z + self.c_beta * z + self.c_gamma;
-    };
-    */
+
     double b = self.c_alpha;
     double c = self.c_beta;
     double d = self.c_gamma;
     double *z = [[NumericHelpers sharedInstance] solveCubicEquationZ3:b Z2:c Z:d];
-    /*
-    double *z1 = [[NumericHelpers sharedInstance] solveCubicEquationZ3:3 Z2:6 Z:5];
-    double *z2 = [[NumericHelpers sharedInstance] solveCubicEquationZ3:0 Z2:-15 Z:-4];
-    double *z3 = [[NumericHelpers sharedInstance] solveCubicEquationZ3:5/2.0 Z2:2 Z:0.5];
-    double *z4 = [[NumericHelpers sharedInstance] solveCubicEquationZ3:2 Z2:1 Z:2];
-    double *z5 = [[NumericHelpers sharedInstance] solveCubicEquationZ3:2 Z2:-1 Z:-2];
-    */
-    
+
     double numZeros = z[0];
     if (numZeros == 1) {
-        if (z[1] > 0.0 && z[1] < 5.0) {
+        if (z[1] > 0.0 && z[1] < 10.0) {
             self.z = z[1];
             self.volumen = self.z * R_CONST * self.temperature / self.pressure;
         }
-    } else if (numZeros == 2) {
-        
     } else if (numZeros == 3) {
-        if (z[1]>0) {
-            if (_isLiquid) {
+        if (z[3]>0) {
+            if (_isLiquid && self.temperature < 10000) {
                 self.z = z[3];
             } else {
                 self.z = z[1];
             }
             self.volumen = self.z * R_CONST * self.temperature / self.pressure;
-        } else if (z[2] > 0) {
-            if (_isLiquid) {
-                self.z = z[2];
-            } else {
-                self.z = z[1];
-            }
+        } else if (z[1] > 0) {
+            self.z = z[1];
             self.volumen = self.z * R_CONST * self.temperature / self.pressure;
-        } else if (z[3] > 0) {
-            self.z = z[3];
         }
     }
+    if (_isLiquid && self.z < 0.2) {
+        self.volumen = self.volumen - self.c_c;
+        self.z = self.pressure * self.volumen / (R_CONST * self.temperature);
+    }
+    free(z);
     
+    double v = self.volumen;
+    double dpdv;
+    switch (self.type) {
+        case PR:
+        case PRSV:
+        case PRTwu:
+            dpdv = -((R_CONST*self.temperature)/pow(v-self.c_b,2))+self.c_a*2*(v+self.c_b)/pow(v*v+2*v*self.c_b-self.c_B*self.c_b, 2);
+            break;
+        default:
+            dpdv = -((R_CONST*self.temperature)/pow(v-self.c_b,2))+self.c_a*(2*v+self.c_b)/pow(v*(v+self.c_b), 2);
+            break;
+    }
     
-    
-    
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////// ////////////////////// ////////////////////////////////////////////
-    
-    
+    _isothermalCompressibility = -1/(v*dpdv);
     
     NSDictionary *results;
     /*
@@ -357,7 +347,8 @@
         };
         //results = [[NumericHelpers sharedInstance] regulaFalsiMethod:zFunction infLimit:0.0 supLimit:0.5];
         results = [[NumericHelpers sharedInstance] puntoFijoMethod:zLiqFunction initValue:self.c_B infLimit:0.0 supLimit:1.0];
-    } else {
+    }
+    if (!_isLiquid || (results && ![results[@"MESSAGE"] isEqualToString:@""])) {
         FunctionBlock zGasFunction = ^(double z){
             return 1 + self.c_B - self.c_A*(z-self.c_B)/((z+self.c_sigma_2*self.c_B)*(z+self.c_sigma_1*self.c_B));
         };
@@ -373,21 +364,11 @@
             self.volumen = self.volumen - self.c_c;
             self.z = self.pressure * self.volumen / (R_CONST * self.temperature);
         }
-        [self calcIntensiveProperties];
     }
     */
-    return results;
-}
-
-- (void)calcZ_VT {
-    [self calcCubicConstant];
-    
-    double v = self.volumen;
-    self.pressure = ((R_CONST * self.temperature) / (v - self.c_b)) - (self.c_a / (v*v + self.c_delta*v + self.c_epsilon));
-    
-    self.z = self.pressure * self.volumen / (R_CONST * self.temperature);
     
     [self calcIntensiveProperties];
+    return results;
 }
 
 #pragma mark - Calc lnPhi/Enthalpy/Entropy
@@ -398,6 +379,7 @@
     
     double z = self.z;
     double t = self.temperature;
+    double p = self.pressure;
     double v = self.volumen;
     double B = self.c_B;
     double A = self.c_A;
@@ -408,69 +390,55 @@
     
     free(_componentLnPhi);
     _componentLnPhi = (double *)calloc(self.components.count, sizeof(double));
+    free(_DLnPhiDP);
+    _DLnPhiDP = (double *)calloc(self.components.count, sizeof(double));
+    free(_DLnPhiDT);
+    _DLnPhiDT = (double *)calloc(self.components.count, sizeof(double));
+    
+    self.c_dzdp = (B * (2*A+2*B*z+z) - A*z)/(p*(3*z*z-2*z+A-B-B*B));
+    double dAdt = A * ((self.c_dadt/self.c_a)-(2/t));
+    self.c_dzdt = (dAdt*(B-z)-B*(A+z+2*B*z)*t)/(3*z*z-2*z+A-B-B*B);
+ 
+    double prueba = (1/p)-self.isothermalCompressibility*z;
+    double dzdp = self.c_dzdp;
+    double dzdt = self.c_dzdt;
     
     Component *comp;
-    //self.lnPhi = 0;
     for (int i = 0; i<self.components.count; i++) {
         comp = ((Component *)self.components[i]);
         double AB = 0;
         for (int j = 0; j<self.components.count; j++) {
             Component *compJ = ((Component *)self.components[j]);
-            double aij = sqrt(compJ.cubic_a * comp.cubic_a);
+            double aij = sqrt(compJ.cubic_a * comp.cubic_a) * (1-_c_kij[i][j]);
             AB += compJ.composition * aij;
         }
         AB *= 2/self.c_a;
         AB -= (comp.cubic_b / self.c_b);
-        double lnPhi;
         switch (self.type) {
             case RK:
             case SRK:
             case SRKTwu:
             case SRKKabadiDanner:
-                lnPhi = - log(z - B) + (z - 1) * (comp.cubic_b / self.c_b) - (A / B) * AB * log(1+B/z);
+                _componentLnPhi[i] = - log(z - B) + (z - 1) * (comp.cubic_b / self.c_b) - (A / B) * AB * log(1+B/z);
+                //_DLnPhiDP[i] = (comp.cubic_b * dzdp / self.c_b) + ((dzdp - (B/p))/(B-z)) + ((A/(z+B))*(AB - (comp.cubic_b/self.c_b))*((dzdp/z)-(1/p)));
+                //_DLnPhiDT[i] = (comp.cubic_b * dzdt / self.c_b) + ((dzdt - (B/t))/(B-z)) + ((A/(z+B))*(1 - (comp.cubic_b/self.c_b))*((dzdt/z)-(1/t)));
                 break;
             default:
-                lnPhi = - log(z - B) + (z - 1) * (comp.cubic_b / self.c_b) - (A / (2*sqrt(2)*B)) * AB * ln;
+                _componentLnPhi[i] = - log(z - B) + (z - 1) * (comp.cubic_b / self.c_b) - (A / (2*sqrt(2)*B)) * AB * ln;
+                //_DLnPhiDP[i] = (comp.cubic_b * dzdp / self.c_b) + ((dzdp - (B/p))/(B-z)) + ((A/(z*z+2*B*z+1))*(AB - (comp.cubic_b/self.c_b))*((dzdp)-(z/p)));
+                //_DLnPhiDT[i] = (comp.cubic_b * dzdt / self.c_b) + ((dzdt - (B/t))/(B-z)) + ((A/(z+B))*(1 - (comp.cubic_b/self.c_b))*((dzdt/z)-(1/t)));
                 break;
-        }        
-        _componentLnPhi[i] = lnPhi;
+        }
+        NSLog(@"LnPhi: %g || Phi: %g",_componentLnPhi[i], exp(_componentLnPhi[i]));
+        _DLnPhiDP[i] = (comp.cubic_b * dzdp / self.c_b) + ((dzdp - (B/p))/(B-z)) + ((A/(z+B))*(AB - (comp.cubic_b/self.c_b))*((dzdp/z)-(1/p)));
+        _DLnPhiDT[i] = (comp.cubic_b * dzdt / self.c_b) + ((dzdt - (B/t))/(B-z)) + ((A/(z+B))*(1 - (comp.cubic_b/self.c_b))*((dzdt/z)-(1/t)));
     }
-    
-    [self derivateLnPhiInPressureAndTemperature];
     
     double residualEnthalpy = R_CONST * t * (z-1) + (((t * self.c_dadt)-self.c_a) / d24e05) * ln;
     double residualEntropy = R_CONST * log(z-B) + (self.c_dadt / d24e05) * ln;
     
     _enthalpy = residualEnthalpy + self.idealEnthalpy;
     _entropy = residualEntropy + self.idealEntropy;
-}
-
-- (void)derivateLnPhiInPressureAndTemperature {
-    double z = self.z;
-    double B = self.c_B;
-    double A = self.c_A;
-    double p = self.pressure;
-    double t = self.temperature;
-    
-    self.c_dzdp = (B * (2*A+2*B*z+z) - A*z)/(p*(3*z*z-2*z+A-B-B*B));
-    double dAdt = A * ((self.c_dadt/self.c_a)-(2/t));
-    self.c_dzdt = (dAdt*(B-z)-B*(A+z+2*B*z)*t)/(3*z*z-2*z+A-B-B*B);
-    
-    double dzdp = self.c_dzdp;
-    double dzdt = self.c_dzdt;
-    
-    Component *comp;
-    
-    free(_DLnPhiDP);
-    _DLnPhiDP = (double *)calloc(self.components.count, sizeof(double));
-    free(_DLnPhiDT);
-    _DLnPhiDT = (double *)calloc(self.components.count, sizeof(double));
-    
-    for (int i = 0; i<self.components.count; i++) {
-        comp = ((Component *)self.components[i]);
-        _DLnPhiDP[i] = (comp.cubic_b * dzdp / self.c_b) + ((dzdp - (B/p))/(B-z)) + ((A/(z+B))*(1 - (comp.cubic_b/self.c_b))*((dzdp/z)-(1/p)));
-        _DLnPhiDT[i] = (comp.cubic_b * dzdt / self.c_b) + ((dzdt - (B/t))/(B-z)) + ((A/(z+B))*(1 - (comp.cubic_b/self.c_b))*((dzdt/z)-(1/t)));
-    }
 }
 
 - (void)dealloc {

@@ -86,6 +86,10 @@ PROPERTIES SETTERS
     return self.idealEntropy;
 }
 
+- (double)isothermalCompressibility {
+    return 1/self.pressure;
+}
+
 /******
  FUNCTIONS
 ******/

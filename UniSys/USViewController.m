@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *isLiquidSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *zLabel;
 @property (weak, nonatomic) IBOutlet UILabel *volumenLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *selectComponent;
 @property (strong, nonatomic) RealFluid *fluido;
 @property (strong, nonatomic) CubicGas *cubicFluido;
 @end
@@ -52,7 +53,7 @@
     Component *nonano = [[Component alloc]initWithName:@"nonano"];
     nonano.composition = 0.2;
     
-    self.fluido = [[RealFluid alloc] initWithComponents:@[nonano, decano]];
+    self.fluido = [[RealFluid alloc] initWithComponents:@[decano, nonano]];
     
     self.fluido.temperature = [self.temperatureTextField.text doubleValue];
     self.fluido.pressure = [self.pressureTextField.text doubleValue];
@@ -60,14 +61,42 @@
 }
 
 - (IBAction)calculate:(UIButton *)sender {
-    Component *decano = [[Component alloc]initWithName:@"decano"];
-    decano.composition = 0.8;
-    Component *nonano = [[Component alloc]initWithName:@"nonano"];
-    nonano.composition = 0.2;
-    self.cubicFluido = [[CubicGas alloc] initWithComponents:@[decano,nonano] isLiquid:self.isLiquidSwitch.isOn];
+    NSArray *components;
+    if (self.selectComponent.selectedSegmentIndex == 0) {
+        Component *decano = [[Component alloc]initWithName:@"decano"];
+        decano.composition = 1.0;
+        components = @[decano];
+        self.cubicFluido = [[CubicGas alloc] initWithComponents:components isLiquid:self.isLiquidSwitch.isOn];
+    } else if (self.selectComponent.selectedSegmentIndex == 1) {
+        Component *decano2 = [[Component alloc]initWithName:@"decano"];
+        decano2.composition = 0.8;
+        Component *nonano = [[Component alloc]initWithName:@"nonano"];
+        nonano.composition = 0.2;
+        components = @[decano2, nonano];
+        self.cubicFluido = [[CubicGas alloc] initWithComponents:components isLiquid:self.isLiquidSwitch.isOn];
+    } else if (self.selectComponent.selectedSegmentIndex == 2) {
+        Component *nitrogeno = [[Component alloc]initWithName:@"nitrogeno"];
+        nitrogeno.composition = 0.4;
+        Component *metano = [[Component alloc]initWithName:@"metano"];
+        metano.composition = 0.6;
+        components = @[nitrogeno, metano];
+        self.cubicFluido = [[CubicGas alloc] initWithType:RK andComponents:components isLiquid:self.isLiquidSwitch.isOn];
+    } else if (self.selectComponent.selectedSegmentIndex == 3) {
+        Component *metano = [[Component alloc]initWithName:@"metano"];
+        metano.composition = 0.5;
+        Component *butano = [[Component alloc]initWithName:@"butano"];
+        butano.composition = 0.5;
+        components = @[metano, butano];
+        self.cubicFluido = [[CubicGas alloc] initWithType:SRK andComponents:components isLiquid:self.isLiquidSwitch.isOn];
+    } else if (self.selectComponent.selectedSegmentIndex == 4) {
+        Component *propano = [[Component alloc]initWithName:@"propano"];
+        propano.composition = 1.0;
+        components = @[propano];
+        self.cubicFluido = [[CubicGas alloc] initWithType:RK andComponents:components isLiquid:self.isLiquidSwitch.isOn];
+    }
+    
     self.cubicFluido.temperature = [self.temperatureTextField.text doubleValue];
     self.cubicFluido.pressure = [self.pressureTextField.text doubleValue];
-    //[self.fluido calcPropertiesPT];
     [self.cubicFluido checkDegreeOfFreedom];
     
     self.zLabel.text = [NSString stringWithFormat:@"%g",self.cubicFluido.z];
