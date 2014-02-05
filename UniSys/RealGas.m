@@ -44,12 +44,15 @@
     return self;
 }
 
-
 - (NSString *)modelName {
+    return [self modelNameForType:self.modelType];
+}
+
++ (NSString *)modelNameForType:(FluidModelType)type {
     NSString *name;
-    switch (self.modelType) {
+    switch (type) {
         case Ideal:
-            name = @"Ideal Gas";
+            name = @"Ideal gas";
             break;
         case PR:
             name = @"Peng Robinson";
@@ -76,6 +79,25 @@
             break;
     }
     return name;
+}
+
++ (BOOL)isEOS:(FluidModelType)type {
+    BOOL aux = NO;
+    switch (type) {
+        case Ideal:
+        case PR:
+        case PRSV:
+        case PRTwu:
+        case RK:
+        case SRK:
+        case SRKTwu:
+        case SRKKabadiDanner:
+            aux = YES;
+            break;
+        default:
+            break;
+    }
+    return aux;
 }
 
 @end

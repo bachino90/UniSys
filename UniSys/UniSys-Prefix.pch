@@ -13,6 +13,7 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
     #import "NumericHelpers.h"
 
     #define INVALID_PRESSURE -1.0f
@@ -22,7 +23,7 @@
     #define P0 103250.0
 
 typedef enum {
-    Ideal,
+    Ideal = 0,
     PR,
     PRSV,
     PRTwu,
@@ -36,5 +37,19 @@ typedef enum {
     Margules,
     UNIQUAC,
 } FluidModelType;
+
+
+typedef enum {
+    FlowTag = 0,
+    ValveTag,
+    PumpTag,
+    HeaterTag,
+    FlashTag,
+    PipeTag,
+    CompressorTag,
+    TrubineTag,
+    MixerTag,
+    TeeTag,
+}EquipmentTag;
 
 #endif

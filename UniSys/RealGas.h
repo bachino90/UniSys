@@ -15,4 +15,6 @@
 @property (nonatomic, readonly) NSString *modelName;
 @property (nonatomic, readonly) FluidModelType modelType;
 
+- (NSString *)modelNameForType:(FluidModelType)type;
+
 @end
