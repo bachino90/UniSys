@@ -92,7 +92,18 @@
     
     [[USCoreDataController sharedInstance] saveMasterContext];
     */
-    
+    /*
+    NSManagedObjectContext *moc = [[USCoreDataController sharedInstance] masterManagedObjectContext];
+    Component *nitrogeno = [NSEntityDescription insertNewObjectForEntityForName:@"Component" inManagedObjectContext:moc];
+    nitrogeno.name = @"Nitrogeno";
+    nitrogeno.formula = @"N2";
+    nitrogeno.tc = 126.2;
+    nitrogeno.pc = 3400000.0;
+    nitrogeno.vc = 89.2;
+    nitrogeno.zc = 0.289;
+    nitrogeno.w = 0.038;
+    [[USCoreDataController sharedInstance] saveMasterContext];
+     */
     return YES;
 }
 							

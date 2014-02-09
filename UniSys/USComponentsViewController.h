@@ -16,7 +16,7 @@
 @interface USComponentsViewController : UITableViewController
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
-@property (nonatomic, strong) CaseFile *caseFile;
+@property (nonatomic, strong) CaseFile *actualProject;
 @property (nonatomic, weak) id <USComponentsViewControllerDelegate> delegate;
 
 @end

@@ -7,7 +7,13 @@
 //
 
 #import "EquipmentView.h"
-#import "FlowView.h"
+#import "SteamView.h"
+#import "PumpView.h"
+#import "ValveView.h"
+
+@interface EquipmentView ()
+@property (nonatomic, readwrite) NSString * equipmentID;
+@end
 
 @implementation EquipmentView
 
@@ -19,7 +25,8 @@
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapEquipment:)];
         tapGesture.numberOfTapsRequired = 1;
         tapGesture.numberOfTouchesRequired = 1;
-        self.gestureRecognizers = @[tapGesture];
+        
+        self.gestureRecognizers = [self.gestureRecognizers arrayByAddingObject:tapGesture];
     }
     return self;
 }
@@ -36,20 +43,21 @@
     return @[@"Flow",@"Valva",@"Valva",@"Valva",@"Valva",@"Valva",@"Valva",@"Valva",@"Valva",@"Valva",@"Valva",@"Valva",@"Valva",@"Valva"];
 }
 
-+ (EquipmentView *)viewForEquipment:(EquipmentTag)equipment {
++ (EquipmentView *)viewForEquipment:(EquipmentTag)equipment andID:(NSString *)equipID {
     EquipmentView *equip = nil;
     switch (equipment) {
-        case FlowTag:
-            equip = [[FlowView alloc]init];
+        case SteamTag:
+            equip = [[ValveView alloc]init];
             break;
         case ValveTag:
-            equip = [[FlowView alloc]init];
+            equip = [[ValveView alloc]init];
             break;
         default:
-            equip = [[FlowView alloc]init];
+            equip = [[ValveView alloc]init];
             break;
     }
-    equip.backgroundColor = [UIColor blueColor];
+    equip.backgroundColor = [UIColor clearColor];
+    equip.equipmentID = equipID;
     return equip;
 }
 

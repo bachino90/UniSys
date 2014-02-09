@@ -11,7 +11,7 @@
 
 @interface IdealGas ()
 
-@property (nonatomic, readwrite) double z;
+@property (nonatomic, readwrite) long double z;
 @property (nonatomic, readwrite) double volumen;
 
 @property (nonatomic, readwrite) double idealEnthalpy;
@@ -74,8 +74,8 @@ PROPERTIES SETTERS
 
 #pragma mark - Getters
 
-- (double)z {
-    return 1.0;
+- (long double)z {
+    return 1.0L;
 }
 
 - (double)enthalpy {

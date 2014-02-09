@@ -8,9 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "Component.h"
+#import "Steam.h"
+#import "BaseEquipment.h"
 
 @interface CaseFile : NSObject
 
+// propiedades generales
 @property (nonatomic, strong) NSMutableArray *components;
 @property (nonatomic) FluidModelType model;
 @property (nonatomic, strong) NSString *name;
@@ -19,5 +22,12 @@
 
 - (void)addComponent:(Component *)comp;
 - (void)deleteComponent:(Component *)comp;
+
+// propiedades de equipos y corrientes
+@property (nonatomic, strong) NSMutableDictionary *totalSteams;
+@property (nonatomic, strong) NSMutableDictionary *totalEquipments;
+
+- (NSString *)newSteam;
+- (NSString *)newEquipment:(EquipmentTag)tag;
 
 @end

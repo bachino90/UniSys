@@ -72,7 +72,7 @@
     FluidModel *model = self.models[indexPath.row];
     cell.textLabel.text = model.name;
     cell.accessoryType = UITableViewCellAccessoryNone;
-    if (self.caseFile.model == model.type) {
+    if (self.actualProject.model == model.type) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
     
@@ -85,7 +85,7 @@
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     FluidModel *model = self.models[indexPath.row];
     
-    self.caseFile.model = model.type;
+    self.actualProject.model = model.type;
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
     
     [self.modelTableView reloadData];

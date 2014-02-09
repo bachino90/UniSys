@@ -42,6 +42,4 @@
 @property (nonatomic) double composition;
 @property (nonatomic) double phi;
 
-- (instancetype)initWithName:(NSString *)name;
-
 @end

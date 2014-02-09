@@ -14,7 +14,7 @@
 @property (nonatomic, readwrite) FluidModelType type;
 @property (nonatomic, readwrite) NSString *eosName;
 
-@property (nonatomic, readwrite) double z;
+@property (nonatomic, readwrite) long double z;
 @property (nonatomic, readwrite) double volumen;
 
 @property (nonatomic, readwrite) double *componentLnPhi;
@@ -92,7 +92,7 @@
 
 #pragma mark - Getters
 
-- (double)z {
+- (long double)z {
     return _z;
 }
 

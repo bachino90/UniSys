@@ -60,7 +60,7 @@
 }
 
 - (IBAction)doneSetup:(id)sender {
-    [self.delegate finishSetupWithCaseFile:self.caseFile];
+    [self.delegate finishSetupWithCaseFile:self.actualProject];
 }
 
 #pragma mark - Table view data source
@@ -91,8 +91,8 @@
     cell.nameLabel.text = comp.name;
     cell.formulaLabel.text = comp.formula;
     cell.accessoryType = UITableViewCellAccessoryNone;
-    for (int i=0; i<self.caseFile.componentCount; i++) {
-        if ([comp isEqual:self.caseFile.components[i]]) {
+    for (int i=0; i<self.actualProject.componentCount; i++) {
+        if ([comp isEqual:self.actualProject.components[i]]) {
             cell.checked = YES;
             break;
         }
@@ -146,9 +146,9 @@
     Component *comp = [self.fetchedResultsController
                        objectAtIndexPath:indexPath];
     if (cell.checked) {
-        [self.caseFile deleteComponent:comp];
+        [self.actualProject deleteComponent:comp];
     } else {
-        [self.caseFile addComponent:comp];
+        [self.actualProject addComponent:comp];
     }
     cell.checked = !cell.checked;
     
@@ -165,9 +165,9 @@
     if ([[segue identifier] isEqualToString:@"Fluid Packages Segue"]) {
         UITabBarController *tabBar = [segue destinationViewController];
         USModelComponentViewController *mcvc = tabBar.viewControllers[0];
-        mcvc.caseFile = self.caseFile;
+        mcvc.actualProject = self.actualProject;
         USBinaryParametersViewController *bpvc = tabBar.viewControllers[1];
-        bpvc.caseFile = self.caseFile;
+        bpvc.actualProject = self.actualProject;
     }
 }
 

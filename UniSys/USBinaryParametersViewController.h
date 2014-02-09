@@ -11,6 +11,6 @@
 
 @interface USBinaryParametersViewController : UIViewController
 
-@property (nonatomic, strong) CaseFile *caseFile;
+@property (nonatomic, strong) CaseFile *actualProject;
 
 @end

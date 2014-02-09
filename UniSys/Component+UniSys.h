@@ -30,5 +30,7 @@
 */
 
 - (BOOL)isTheSame:(id)object;
++ (Component *)componentWithName:(NSString *)name;
+
 
 @end

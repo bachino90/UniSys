@@ -8,6 +8,7 @@
 
 #import "USViewController.h"
 #import "Component.h"
+#import "Component+UniSys.h"
 #import "RealFluid.h"
 
 @interface USViewController ()
@@ -28,11 +29,11 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    Component *octano = [[Component alloc]initWithName:@"octano"];
+    Component *octano = [Component componentWithName:@"octano"];
     octano.composition = 1.0;
-    Component *nonano = [[Component alloc]initWithName:@"nonano"];
+    Component *nonano = [Component componentWithName:@"nonano"];
     nonano.composition = 0.2;
-    Component *decano = [[Component alloc]initWithName:@"decano"];
+    Component *decano = [Component componentWithName:@"decano"];
     decano.composition = 0.2;
     
     /*
@@ -48,9 +49,9 @@
 }
 
 - (IBAction)calculateFluid:(UIButton *)sender {
-    Component *decano = [[Component alloc]initWithName:@"decano"];
+    Component *decano = [Component componentWithName:@"decano"];
     decano.composition = 0.8;
-    Component *nonano = [[Component alloc]initWithName:@"nonano"];
+    Component *nonano = [Component componentWithName:@"nonano"];
     nonano.composition = 0.2;
     
     self.fluido = [[RealFluid alloc] initWithComponents:@[decano, nonano]];
@@ -63,33 +64,33 @@
 - (IBAction)calculate:(UIButton *)sender {
     NSArray *components;
     if (self.selectComponent.selectedSegmentIndex == 0) {
-        Component *decano = [[Component alloc]initWithName:@"decano"];
+        Component *decano = [Component componentWithName:@"decano"];
         decano.composition = 1.0;
         components = @[decano];
         self.cubicFluido = [[CubicGas alloc] initWithComponents:components isLiquid:self.isLiquidSwitch.isOn];
     } else if (self.selectComponent.selectedSegmentIndex == 1) {
-        Component *decano2 = [[Component alloc]initWithName:@"decano"];
+        Component *decano2 = [Component componentWithName:@"decano"];
         decano2.composition = 0.8;
-        Component *nonano = [[Component alloc]initWithName:@"nonano"];
+        Component *nonano = [Component componentWithName:@"nonano"];
         nonano.composition = 0.2;
         components = @[decano2, nonano];
         self.cubicFluido = [[CubicGas alloc] initWithComponents:components isLiquid:self.isLiquidSwitch.isOn];
     } else if (self.selectComponent.selectedSegmentIndex == 2) {
-        Component *nitrogeno = [[Component alloc]initWithName:@"nitrogeno"];
+        Component *nitrogeno = [Component componentWithName:@"nitrogeno"];
         nitrogeno.composition = 0.4;
-        Component *metano = [[Component alloc]initWithName:@"metano"];
+        Component *metano = [Component componentWithName:@"metano"];
         metano.composition = 0.6;
         components = @[nitrogeno, metano];
         self.cubicFluido = [[CubicGas alloc] initWithType:RK andComponents:components isLiquid:self.isLiquidSwitch.isOn];
     } else if (self.selectComponent.selectedSegmentIndex == 3) {
-        Component *metano = [[Component alloc]initWithName:@"metano"];
+        Component *metano = [Component componentWithName:@"metano"];
         metano.composition = 0.5;
-        Component *butano = [[Component alloc]initWithName:@"butano"];
+        Component *butano = [Component componentWithName:@"butano"];
         butano.composition = 0.5;
         components = @[metano, butano];
         self.cubicFluido = [[CubicGas alloc] initWithType:SRK andComponents:components isLiquid:self.isLiquidSwitch.isOn];
     } else if (self.selectComponent.selectedSegmentIndex == 4) {
-        Component *propano = [[Component alloc]initWithName:@"propano"];
+        Component *propano = [Component componentWithName:@"propano"];
         propano.composition = 1.0;
         components = @[propano];
         self.cubicFluido = [[CubicGas alloc] initWithType:RK andComponents:components isLiquid:self.isLiquidSwitch.isOn];

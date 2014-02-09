@@ -172,6 +172,35 @@
     return results;
 }
 
+- (NSDictionary *)newtonRaphsonMethod:(FunctionBlock)functionBlock derivate:(FunctionBlock)derivateBlock initValue:(double)a infLimit:(double)inf supLimit:(double)sup {
+    NSDictionary *results;
+    
+    double error = 0.001;
+    
+    double z = a+1;
+    double zi = a;
+    NSString *errMessage = @"";
+    BOOL thereIsZero = YES;
+    
+    while (ABS(z-zi) > error) {
+        z = zi;
+        zi = z - functionBlock(z)/derivateBlock(z);
+        if (zi<inf) {
+            errMessage = @"INF_ERROR";
+            thereIsZero = NO;
+            break;
+        } else if (zi>sup) {
+            errMessage = @"SUP_ERROR";
+            thereIsZero = NO;
+            break;
+        }
+    }
+    
+    results = [NSDictionary dictionaryWithObjectsAndKeys:@(zi),@"ZEROS",@(thereIsZero),@"Hay zero?",errMessage,@"MESSAGE", nil];
+    
+    return results;
+}
+
 - (double)integrateSimpson:(FunctionBlock)functionBlock infLimit:(double)a supLimit:(double)b {
     double result = 0;
     

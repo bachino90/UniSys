@@ -40,6 +40,12 @@
 		EB32AB421880AC1A00C15DC7 /* RealGas.m in Sources */ = {isa = PBXBuildFile; fileRef = EB32AB411880AC1A00C15DC7 /* RealGas.m */; };
 		EB32AB461880ADE700C15DC7 /* Pressure.m in Sources */ = {isa = PBXBuildFile; fileRef = EB32AB451880ADE700C15DC7 /* Pressure.m */; };
 		EB32AB491880ADFB00C15DC7 /* Temperature.m in Sources */ = {isa = PBXBuildFile; fileRef = EB32AB481880ADFB00C15DC7 /* Temperature.m */; };
+		EB32AD4818A2AD9F001FD995 /* PumpView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB32AD4718A2AD9F001FD995 /* PumpView.m */; };
+		EB32AD4B18A2BC2F001FD995 /* ValveView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB32AD4A18A2BC2F001FD995 /* ValveView.m */; };
+		EB32AD5418A2E905001FD995 /* USSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB32AD5318A2E905001FD995 /* USSettingViewController.m */; };
+		EB32AD5718A2EB04001FD995 /* USPropertiesSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB32AD5618A2EB04001FD995 /* USPropertiesSettingViewController.m */; };
+		EB32AD5A18A2EB17001FD995 /* USCompositionSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB32AD5918A2EB17001FD995 /* USCompositionSettingViewController.m */; };
+		EB32AD5D18A2FBD6001FD995 /* Steam.m in Sources */ = {isa = PBXBuildFile; fileRef = EB32AD5C18A2FBD6001FD995 /* Steam.m */; };
 		EB4767F618A13BDF00D90FB5 /* CaseFile.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4767F518A13BDF00D90FB5 /* CaseFile.m */; };
 		EB47680118A144FF00D90FB5 /* USComponentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4767FE18A144FF00D90FB5 /* USComponentsViewController.m */; };
 		EB47680218A144FF00D90FB5 /* USProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB47680018A144FF00D90FB5 /* USProjectViewController.m */; };
@@ -56,10 +62,13 @@
 		EBB636A9189C34C7006F9FB4 /* Component+UniSys.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB636A8189C34C7006F9FB4 /* Component+UniSys.m */; };
 		EBB636AB189C6E16006F9FB4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBB636AA189C6E16006F9FB4 /* CoreData.framework */; };
 		EBB636D3189DA14B006F9FB4 /* USCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB636D2189DA14B006F9FB4 /* USCoreDataController.m */; };
-		EBB636D6189DA2A1006F9FB4 /* Component+Search.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB636D5189DA2A1006F9FB4 /* Component+Search.m */; };
+		EBBD284818A5759E003763F2 /* SteamView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBD284718A5759E003763F2 /* SteamView.m */; };
+		EBBE3BE118A4303D001F30C9 /* USSteamTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBE3BE018A4303D001F30C9 /* USSteamTabBarController.m */; };
+		EBBE3BE418A438BC001F30C9 /* PropertieCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBE3BE318A438BC001F30C9 /* PropertieCell.m */; };
+		EBBE3BE718A4968C001F30C9 /* Property.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBE3BE618A4968C001F30C9 /* Property.m */; };
+		EBBE3BEA18A49B61001F30C9 /* CompositionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBE3BE918A49B61001F30C9 /* CompositionCell.m */; };
 		EBD4129D18A1AEEC0010D0DD /* USEquipmentListView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD4129C18A1AEEC0010D0DD /* USEquipmentListView.m */; };
 		EBD412A018A1D2EC0010D0DD /* EquipmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD4129F18A1D2EC0010D0DD /* EquipmentView.m */; };
-		EBD412A318A1DF1D0010D0DD /* FlowView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD412A218A1DF1D0010D0DD /* FlowView.m */; };
 		EBEA3BDC1881DA7200395EA1 /* Component1.m in Sources */ = {isa = PBXBuildFile; fileRef = EBEA3BDB1881DA7200395EA1 /* Component1.m */; };
 /* End PBXBuildFile section */
 
@@ -131,6 +140,18 @@
 		EB32AB451880ADE700C15DC7 /* Pressure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pressure.m; sourceTree = "<group>"; };
 		EB32AB471880ADFB00C15DC7 /* Temperature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Temperature.h; sourceTree = "<group>"; };
 		EB32AB481880ADFB00C15DC7 /* Temperature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Temperature.m; sourceTree = "<group>"; };
+		EB32AD4618A2AD9F001FD995 /* PumpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PumpView.h; sourceTree = "<group>"; };
+		EB32AD4718A2AD9F001FD995 /* PumpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PumpView.m; sourceTree = "<group>"; };
+		EB32AD4918A2BC2F001FD995 /* ValveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValveView.h; sourceTree = "<group>"; };
+		EB32AD4A18A2BC2F001FD995 /* ValveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValveView.m; sourceTree = "<group>"; };
+		EB32AD5218A2E905001FD995 /* USSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USSettingViewController.h; sourceTree = "<group>"; };
+		EB32AD5318A2E905001FD995 /* USSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = USSettingViewController.m; sourceTree = "<group>"; };
+		EB32AD5518A2EB04001FD995 /* USPropertiesSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USPropertiesSettingViewController.h; sourceTree = "<group>"; };
+		EB32AD5618A2EB04001FD995 /* USPropertiesSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = USPropertiesSettingViewController.m; sourceTree = "<group>"; };
+		EB32AD5818A2EB17001FD995 /* USCompositionSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USCompositionSettingViewController.h; sourceTree = "<group>"; };
+		EB32AD5918A2EB17001FD995 /* USCompositionSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = USCompositionSettingViewController.m; sourceTree = "<group>"; };
+		EB32AD5B18A2FBD6001FD995 /* Steam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Steam.h; sourceTree = "<group>"; };
+		EB32AD5C18A2FBD6001FD995 /* Steam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Steam.m; sourceTree = "<group>"; };
 		EB4767F418A13BDF00D90FB5 /* CaseFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseFile.h; sourceTree = "<group>"; };
 		EB4767F518A13BDF00D90FB5 /* CaseFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseFile.m; sourceTree = "<group>"; };
 		EB4767FD18A144FF00D90FB5 /* USComponentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USComponentsViewController.h; sourceTree = "<group>"; };
@@ -161,14 +182,20 @@
 		EBB636AA189C6E16006F9FB4 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		EBB636D1189DA14B006F9FB4 /* USCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USCoreDataController.h; sourceTree = "<group>"; };
 		EBB636D2189DA14B006F9FB4 /* USCoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = USCoreDataController.m; sourceTree = "<group>"; };
-		EBB636D4189DA2A1006F9FB4 /* Component+Search.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Component+Search.h"; sourceTree = "<group>"; };
-		EBB636D5189DA2A1006F9FB4 /* Component+Search.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Component+Search.m"; sourceTree = "<group>"; };
+		EBBD284618A5759E003763F2 /* SteamView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SteamView.h; sourceTree = "<group>"; };
+		EBBD284718A5759E003763F2 /* SteamView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SteamView.m; sourceTree = "<group>"; };
+		EBBE3BDF18A4303D001F30C9 /* USSteamTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USSteamTabBarController.h; sourceTree = "<group>"; };
+		EBBE3BE018A4303D001F30C9 /* USSteamTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = USSteamTabBarController.m; sourceTree = "<group>"; };
+		EBBE3BE218A438BC001F30C9 /* PropertieCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertieCell.h; sourceTree = "<group>"; };
+		EBBE3BE318A438BC001F30C9 /* PropertieCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertieCell.m; sourceTree = "<group>"; };
+		EBBE3BE518A4968C001F30C9 /* Property.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Property.h; sourceTree = "<group>"; };
+		EBBE3BE618A4968C001F30C9 /* Property.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Property.m; sourceTree = "<group>"; };
+		EBBE3BE818A49B61001F30C9 /* CompositionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompositionCell.h; sourceTree = "<group>"; };
+		EBBE3BE918A49B61001F30C9 /* CompositionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompositionCell.m; sourceTree = "<group>"; };
 		EBD4129B18A1AEEC0010D0DD /* USEquipmentListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USEquipmentListView.h; sourceTree = "<group>"; };
 		EBD4129C18A1AEEC0010D0DD /* USEquipmentListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = USEquipmentListView.m; sourceTree = "<group>"; };
 		EBD4129E18A1D2EC0010D0DD /* EquipmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EquipmentView.h; sourceTree = "<group>"; };
 		EBD4129F18A1D2EC0010D0DD /* EquipmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EquipmentView.m; sourceTree = "<group>"; };
-		EBD412A118A1DF1D0010D0DD /* FlowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlowView.h; sourceTree = "<group>"; };
-		EBD412A218A1DF1D0010D0DD /* FlowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlowView.m; sourceTree = "<group>"; };
 		EBEA3BDA1881DA7200395EA1 /* Component1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Component1.h; sourceTree = "<group>"; };
 		EBEA3BDB1881DA7200395EA1 /* Component1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Component1.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -218,6 +245,10 @@
 		EB2017271884765F00641B23 /* Equipments */ = {
 			isa = PBXGroup;
 			children = (
+				EBBE3BE518A4968C001F30C9 /* Property.h */,
+				EBBE3BE618A4968C001F30C9 /* Property.m */,
+				EB32AD5B18A2FBD6001FD995 /* Steam.h */,
+				EB32AD5C18A2FBD6001FD995 /* Steam.m */,
 				EB2017331884779A00641B23 /* BaseEquipment.h */,
 				EB2017341884779A00641B23 /* BaseEquipment.m */,
 				EB201736188477C900641B23 /* PumpEquipment.h */,
@@ -359,8 +390,6 @@
 				EBB636A5189C3356006F9FB4 /* Component.m */,
 				EBB636A7189C34C7006F9FB4 /* Component+UniSys.h */,
 				EBB636A8189C34C7006F9FB4 /* Component+UniSys.m */,
-				EBB636D4189DA2A1006F9FB4 /* Component+Search.h */,
-				EBB636D5189DA2A1006F9FB4 /* Component+Search.m */,
 				EB47680F18A1763E00D90FB5 /* FluidModel.h */,
 				EB47681018A1763E00D90FB5 /* FluidModel.m */,
 				EB20174B1885A3CB00641B23 /* Numeric Helpers */,
@@ -371,11 +400,14 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		EB32AD4518A2A7B2001FD995 /* Equipment Setting View */ = {
+		EB32AD4518A2A7B2001FD995 /* Equipment Setting View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				EB32AD5218A2E905001FD995 /* USSettingViewController.h */,
+				EB32AD5318A2E905001FD995 /* USSettingViewController.m */,
+				EBBE3BEB18A49BCA001F30C9 /* Steam Settings */,
 			);
-			name = "Equipment Setting View";
+			name = "Equipment Setting View Controllers";
 			sourceTree = "<group>";
 		};
 		EB47681218A1799D00D90FB5 /* View Controllers */ = {
@@ -395,17 +427,38 @@
 				EB47680718A1464B00D90FB5 /* USModelComponentViewController.m */,
 				EB47680918A1466000D90FB5 /* USBinaryParametersViewController.h */,
 				EB47680A18A1466000D90FB5 /* USBinaryParametersViewController.m */,
+				EB32AD4518A2A7B2001FD995 /* Equipment Setting View Controllers */,
 			);
 			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		EBBE3BEB18A49BCA001F30C9 /* Steam Settings */ = {
+			isa = PBXGroup;
+			children = (
+				EBBE3BDF18A4303D001F30C9 /* USSteamTabBarController.h */,
+				EBBE3BE018A4303D001F30C9 /* USSteamTabBarController.m */,
+				EB32AD5518A2EB04001FD995 /* USPropertiesSettingViewController.h */,
+				EB32AD5618A2EB04001FD995 /* USPropertiesSettingViewController.m */,
+				EBBE3BE218A438BC001F30C9 /* PropertieCell.h */,
+				EBBE3BE318A438BC001F30C9 /* PropertieCell.m */,
+				EB32AD5818A2EB17001FD995 /* USCompositionSettingViewController.h */,
+				EB32AD5918A2EB17001FD995 /* USCompositionSettingViewController.m */,
+				EBBE3BE818A49B61001F30C9 /* CompositionCell.h */,
+				EBBE3BE918A49B61001F30C9 /* CompositionCell.m */,
+			);
+			name = "Steam Settings";
 			sourceTree = "<group>";
 		};
 		EBD412A418A1DF270010D0DD /* Equipment Views */ = {
 			isa = PBXGroup;
 			children = (
 				EBD412A518A1DF550010D0DD /* Base View */,
-				EB32AD4518A2A7B2001FD995 /* Equipment Setting View */,
-				EBD412A118A1DF1D0010D0DD /* FlowView.h */,
-				EBD412A218A1DF1D0010D0DD /* FlowView.m */,
+				EB32AD4918A2BC2F001FD995 /* ValveView.h */,
+				EB32AD4A18A2BC2F001FD995 /* ValveView.m */,
+				EBBD284618A5759E003763F2 /* SteamView.h */,
+				EBBD284718A5759E003763F2 /* SteamView.m */,
+				EB32AD4618A2AD9F001FD995 /* PumpView.h */,
+				EB32AD4718A2AD9F001FD995 /* PumpView.m */,
 			);
 			name = "Equipment Views";
 			sourceTree = "<group>";
@@ -530,31 +583,40 @@
 				EB201732188476CA00641B23 /* Volumen.m in Sources */,
 				EB47680218A144FF00D90FB5 /* USProjectViewController.m in Sources */,
 				EBD4129D18A1AEEC0010D0DD /* USEquipmentListView.m in Sources */,
+				EB32AD4818A2AD9F001FD995 /* PumpView.m in Sources */,
 				EB47681118A1763E00D90FB5 /* FluidModel.m in Sources */,
 				EBB6369D189BF34F006F9FB4 /* UniSys.xcdatamodeld in Sources */,
 				EB47680818A1464B00D90FB5 /* USModelComponentViewController.m in Sources */,
+				EB32AD5D18A2FBD6001FD995 /* Steam.m in Sources */,
 				EB20173E1884780D00641B23 /* HeatExchangerEquipment.m in Sources */,
+				EBBE3BE418A438BC001F30C9 /* PropertieCell.m in Sources */,
 				EB2017511885B14000641B23 /* HeaterEquipment.m in Sources */,
 				EB2017351884779A00641B23 /* BaseEquipment.m in Sources */,
+				EB32AD4B18A2BC2F001FD995 /* ValveView.m in Sources */,
 				EB201757188B17E200641B23 /* CubicGas.m in Sources */,
 				EB32AB491880ADFB00C15DC7 /* Temperature.m in Sources */,
 				EB201754188B138600641B23 /* IdealGas.m in Sources */,
+				EB32AD5A18A2EB17001FD995 /* USCompositionSettingViewController.m in Sources */,
+				EBBE3BE118A4303D001F30C9 /* USSteamTabBarController.m in Sources */,
 				EB308F1B188092B500EC117D /* USAppDelegate.m in Sources */,
 				EB201744188478FE00641B23 /* PipeEquipment.m in Sources */,
-				EBB636D6189DA2A1006F9FB4 /* Component+Search.m in Sources */,
 				EB32AB461880ADE700C15DC7 /* Pressure.m in Sources */,
+				EBBD284818A5759E003763F2 /* SteamView.m in Sources */,
 				EB20174E1885A4D700641B23 /* NumericHelpers.m in Sources */,
+				EBBE3BEA18A49B61001F30C9 /* CompositionCell.m in Sources */,
 				EB308F21188092B500EC117D /* USViewController.m in Sources */,
+				EB32AD5418A2E905001FD995 /* USSettingViewController.m in Sources */,
 				EBD412A018A1D2EC0010D0DD /* EquipmentView.m in Sources */,
 				EBEA3BDC1881DA7200395EA1 /* Component1.m in Sources */,
 				EB47680B18A1466000D90FB5 /* USBinaryParametersViewController.m in Sources */,
 				EB308F17188092B500EC117D /* main.m in Sources */,
 				EBB636D3189DA14B006F9FB4 /* USCoreDataController.m in Sources */,
+				EBBE3BE718A4968C001F30C9 /* Property.m in Sources */,
 				EBB636A6189C3356006F9FB4 /* Component.m in Sources */,
+				EB32AD5718A2EB04001FD995 /* USPropertiesSettingViewController.m in Sources */,
 				EB47680E18A1548700D90FB5 /* ComponentCell.m in Sources */,
 				EB4A3742188F382700A10CC8 /* MixerEquipment.m in Sources */,
 				EB20174A188479BA00641B23 /* TurbineEquipment.m in Sources */,
-				EBD412A318A1DF1D0010D0DD /* FlowView.m in Sources */,
 				EB20172C188476A000641B23 /* MolarFlow.m in Sources */,
 				EB2017471884799E00641B23 /* CompressorEquipment.m in Sources */,
 				EB2017251883531000641B23 /* RealFluid.m in Sources */,

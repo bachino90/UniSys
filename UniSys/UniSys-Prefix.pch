@@ -40,7 +40,7 @@ typedef enum {
 
 
 typedef enum {
-    FlowTag = 0,
+    SteamTag = 0,
     ValveTag,
     PumpTag,
     HeaterTag,

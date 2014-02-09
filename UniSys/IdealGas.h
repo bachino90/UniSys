@@ -10,7 +10,7 @@
 
 @interface IdealGas : NSObject {
     @protected
-    double _z;
+    long double _z;
     
     double _enthalpy;
     double _entropy;
@@ -34,7 +34,7 @@
 @property (nonatomic, strong) NSArray *components;
 @property (nonatomic) double *composition;
 
-@property (nonatomic, readonly) double z;
+@property (nonatomic, readonly) long double z;
 @property (nonatomic, readonly) double volumen;     //   m3/mol
 
 @property (nonatomic, readonly) double idealEnthalpy;

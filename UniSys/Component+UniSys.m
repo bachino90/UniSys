@@ -7,6 +7,7 @@
 //
 
 #import "Component+UniSys.h"
+#import "USCoreDataController.h"
 
 @implementation Component (UniSys)
 /*
@@ -34,6 +35,26 @@
             return NO;
     } else
         return NO;
+}
+
++ (Component *)componentWithName:(NSString *)name {
+    NSManagedObjectContext *moc = [[USCoreDataController sharedInstance]masterManagedObjectContext];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Component"];
+    NSArray *sortDescriptor = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedStandardCompare:)]];
+    
+    fetchRequest.sortDescriptors = sortDescriptor;
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name contains[c] %@",name];
+    fetchRequest.predicate = predicate;
+    
+    NSError *error = nil;
+    NSArray *result = [moc executeFetchRequest:fetchRequest error:&error];
+    if (error || result.count < 1) {
+        return nil;
+    }
+    
+    return [result firstObject];
 }
 
 

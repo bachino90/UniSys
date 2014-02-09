@@ -16,8 +16,9 @@
 @interface EquipmentView : DraggableView
 
 + (NSArray *)equipmentsButtonImages;
-+ (EquipmentView *)viewForEquipment:(EquipmentTag)equipment;
++ (EquipmentView *)viewForEquipment:(EquipmentTag)equipment andID:(NSString *)equipID;
 
 @property (nonatomic, weak) id <EquipmentViewDelegate> delegate;
+@property (nonatomic, readonly) NSString * equipmentID;
 
 @end
